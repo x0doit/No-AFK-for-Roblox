@@ -21635,7 +21635,7 @@ bool MainUI_Paint_DrawContent(HDC hdc, const RECT& clientRect, MainUIData* pData
         pData->importSettingsRect = { 0, clientRect.bottom - startBtnH - disclaimerH - rowH, halfX, clientRect.bottom - startBtnH - disclaimerH + 1 };
         pData->exportSettingsRect = { halfX, clientRect.bottom - startBtnH - disclaimerH - rowH, clientRect.right, clientRect.bottom - startBtnH - disclaimerH + 1 };
     } else if (pData->currentPage == 3) { // Advanced
-        int ddW_userSafe = 110;
+        int ddW_userSafe = IsRussianUi() ? 124 : 110;
         int ctrlW = ctrlEndX - ctrlStartX - help_btn_size;
         int compactW = help_btn_size;
         int inlineGap = 4;
