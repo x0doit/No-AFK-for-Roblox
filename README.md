@@ -1,36 +1,54 @@
 <div align="center">
 
-<h2></h2><h4> </h4>
+# No AFK for Roblox
 
-<h3>ℹ️</h3>
+**Анти-AFK для Roblox: игра больше не кикает вас за бездействие**
+(«You were disconnected for being idle 20 minutes», ошибка 278).
 
-**Preview version** \
-You are looking at the preview version of the new AntiAFK-RBX **V4**, which is currently in **beta**.
+Работает в фоне, пока вы заняты другим. Бесплатно, без рекламы, с открытым кодом.
 
-[go to stable version ->](https://github.com/Agzes/AntiAFK-RBX)
+[⬇️ Скачать последнюю версию](https://github.com/x0doit/No-AFK-for-Roblox/releases/latest) · [💬 Discord](https://discord.gg/ayame)
 
-<h2></h2> <br>
+<img src="ReadME/no-afk-main.png" alt="No AFK for Roblox — главное окно" width="380">
 
-⚠️ **WARNING:** AntiAFK-RBX has NO official website, only [GitHub](https://github.com/Agzes/AntiAFK-RBX) and [SourceForge](https://sourceforge.net/projects/antiafk-rbx/). <br> Download ONLY from official sources. See [Issue #32](https://github.com/Agzes/AntiAFK-RBX/issues/32) for details and VirusTotal verification. ❤️
+</div>
 
-<p align="center" width="100%">
-    <a href="https://agzes.github.io/go/to/discord"><img src="ReadME/discord-server.png" alt="Join Discord Server" style="width:45%; min-width:190px; max-width:500px;"></a>
-    <a href="https://github.com/Agzes/AntiAFK-RBX/releases/download/v.4.0.0-beta.3/AntiAFK-RBX.v.4.0.0-beta.3.exe"><img src="ReadME/download-preview.png" alt="Download Now (v.4.0.0-beta.3)" style="width:45%; min-width:190px; max-width:500px;"></a>
-  <br>
-    <img src="ReadME/V4.0.0beta2-Main.png" alt="AntiAFK-RBX by Agzes v.4.0.0 (beta2), UI, Features: Lightweight, Fully Customizable, Clean Dark Theme, Free, Stable, Portable, Fast & Responsive, Unique 'User-Safe' feature, Custom Games Support, FPS (CPU) Limiter, Safe To Use, Multi-Instance, Background/Stealth Mode, Low Resource Usage, All-in-One Utility, Non-intrusive, Tray Mode, Window Management, Bloxstrap/Fishstrap integration, WebHook, Regular Updates, Auto-Mute, Easy to use, Live Statistics, Open-Source, Auto-Reconnect, Grid Snap, Macros System, Status Bar, Launch Arguments, Auto-Start, RAM Cleaner, Simple Mode, Delay Control, Instance Manager, UI Customization, Ad-Free, Screen Saver, Native C++ & WinAPI and more...">
-  <br>
-    <a href="https://github.com/Agzes/AntiAFK-RBX/issues/new?template=feature_request.md"><img src="ReadME/ideas.png" alt="Got ideas to add?" style="width:32%; min-width:190px;"></a>
-    <a href="https://github.com/Agzes/AntiAFK-RBX/issues/new?template=bug_report.md"><img src="ReadME/bug.png" alt="Bug? Write issue!" style="width:32%; min-width:190px;"></a>
-    <a href="https://github.com/Agzes/AntiAFK-RBX/wiki"><img src="ReadME/wiki.png" alt="Wiki" style="width:32%; min-width:190px;"></a>
-</p>
+## Возможности
 
-<h2></h2><h4> </h4>
+- **Анти-AFK.** Раз в заданный интервал программа на мгновение переключается на Roblox, нажимает клавишу и возвращает вас в ваше окно. Действие на выбор: W/S, прыжок, зум, случайное или ваш макрос.
+- **User-Safe.** Ждёт паузы в вашей активности, чтобы не мешать, но никогда не опаздывает к 20-минутному пределу Roblox.
+- **«Я могу забыть».** Сам включает анти-AFK, если вы отошли и забыли его запустить.
+- **Несколько окон Roblox.** Мульти-инстанс, менеджер окон, раскладка окон сеткой.
+- **Макросы и автопереподключение.** Запись своих макросов, автоматическое переподключение после кика.
+- **Ресурсы.** Ограничитель FPS, очистка памяти, автоотключение звука.
+- **Уведомления.** Строка состояния поверх игры, работа из трея, сообщения в Discord через вебхук.
+- **Русский и английский интерфейс**, переключение на лету.
+- **Обновления** приходят из этого репозитория.
 
-🐧 Looking for a Linux solution? Use <a href="https://github.com/Agzes/AntiAFK-RBX-Sober">AntiAFK-RBX-Sober!</a>
+## Установка
 
-<h2></h2> <br>
+1. Скачайте `NoAFK…exe` из [последнего релиза](https://github.com/x0doit/No-AFK-for-Roblox/releases/latest) и запустите.
+2. Если Windows SmartScreen покажет предупреждение, нажмите «Подробнее» → «Выполнить в любом случае».
+3. Если программа не запускается, установите [Microsoft Visual C++ Redistributable x64](https://aka.ms/vc14/vc_redist.x64.exe).
 
-<p align="center" width="100%">
-  <a href="https://github.com/Agzes/AntiAFK-RBX/blob/HEAD/LICENSE"><img src="ReadME/license.png" alt="MIT LICENSE" style="width:32%; min-width:190px;"></a><br>
-  <kbd>With ❤️ by Agzes</kbd> • <kbd>pls ⭐ project!</kbd><br>
-</p>
+Нужна Windows 10 или 11, 64-бит.
+
+## История
+
+Раньше этим проектом занимался Agzes, программа называлась AntiAFK-RBX. Наши взгляды на развитие программы разошлись, и так появился No AFK for Roblox.
+
+## Лицензия
+
+MIT. © 2024–2026 Agzes (оригинальный AntiAFK-RBX), © 2026 x0doit (No AFK for Roblox). Полный текст в файле [LICENSE](LICENSE).
+
+---
+
+## English
+
+**No AFK for Roblox** is a free, open-source anti-AFK tool for Roblox on Windows. It keeps Roblox from kicking you for being idle for 20 minutes (error 278) while you do something else.
+
+It briefly switches to Roblox at a set interval, presses a key (W/S, jump, zoom, random or your own macro) and switches back. User-Safe mode waits for a pause in your activity without ever missing Roblox's 20-minute limit. It also supports multiple Roblox windows, macros, auto-reconnect, an FPS limiter, a RAM cleaner, Discord webhook notifications and an English or Russian interface.
+
+[Download the latest release](https://github.com/x0doit/No-AFK-for-Roblox/releases/latest) · [Discord](https://discord.gg/ayame)
+
+Based on AntiAFK-RBX by Agzes, MIT License.

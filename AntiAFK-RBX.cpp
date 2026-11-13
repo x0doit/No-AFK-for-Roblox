@@ -1,5 +1,6 @@
-﻿// AntiAFK-RBX.cpp • The best program for AntiAFK and Multi-Instance in Roblox. Or just Roblox Anti-AFK. • By Agzes
-// https://github.com/Agzes/AntiAFK-RBX • \[=_=]/
+﻿// No AFK for Roblox • Anti-AFK and Multi-Instance for Roblox. • By x0doit
+// https://github.com/x0doit/No-AFK-for-Roblox
+// Based on AntiAFK-RBX by Agzes (https://github.com/Agzes/AntiAFK-RBX), MIT License.
 
 #define ALPHA   1
 #define BETA    2
@@ -7,14 +8,14 @@
 #define STABLE  4
 #define MAKE_VERSION(major, minor, patch, type, num) ((major)*10000000 + (minor)*100000 + (patch)*1000 + (type)*100 + (num))
 int currentVersion = MAKE_VERSION(4, 0, 0, BETA, 3);
-const wchar_t* g_Version = L"v.4.0.0-beta3-ru.3";
+const wchar_t* g_Version = L"v.4.0.0-beta3-ru.4";
 
 // Updates come from this fork's GitHub releases, tagged v.<upstream version>-ru.<FORK_BUILD>
 // (for example v.4.0.0-beta.3-ru.3). Bump FORK_BUILD and the -ru.N part of g_Version together.
-const int FORK_BUILD = 3;
-#define FORK_RELEASES_URL L"https://github.com/x0doit/AntiAFK-RBX/releases"
-#define FORK_LATEST_RELEASE_URL L"https://github.com/x0doit/AntiAFK-RBX/releases/latest"
-#define FORK_LATEST_RELEASE_API L"https://api.github.com/repos/x0doit/AntiAFK-RBX/releases/latest"
+const int FORK_BUILD = 4;
+#define FORK_RELEASES_URL L"https://github.com/x0doit/No-AFK-for-Roblox/releases"
+#define FORK_LATEST_RELEASE_URL L"https://github.com/x0doit/No-AFK-for-Roblox/releases/latest"
+#define FORK_LATEST_RELEASE_API L"https://api.github.com/repos/x0doit/No-AFK-for-Roblox/releases/latest"
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -94,16 +95,16 @@ static const wchar_t* GetAnnouncementUrl()
 {
     int releaseType = (currentVersion / 100) % 10;
     if (releaseType == ALPHA || releaseType == BETA || releaseType == RC)
-        return L"https://raw.githubusercontent.com/Agzes/AntiAFK-RBX/refs/heads/preview/Announcement/announcement.preview.json";
-    return L"https://raw.githubusercontent.com/Agzes/AntiAFK-RBX/refs/heads/main/Announcement/announcement.json";
+        return L"https://raw.githubusercontent.com/x0doit/No-AFK-for-Roblox/refs/heads/main/Announcement/announcement.json";
+    return L"https://raw.githubusercontent.com/x0doit/No-AFK-for-Roblox/refs/heads/main/Announcement/announcement.json";
 }
 
 static const wchar_t* GetAnnouncementLink()
 {
     int releaseType = (currentVersion / 100) % 10;
     if (releaseType == ALPHA || releaseType == BETA || releaseType == RC)
-        return L"https://agzes.github.io/go/to/antiafk-rbx/preview-notify";
-    return L"https://agzes.github.io/go/to/antiafk-rbx/notify";
+        return L"https://discord.gg/ayame";
+    return L"https://discord.gg/ayame";
 }
 
 
@@ -1162,10 +1163,10 @@ void ShowHelp()
     if (attachedToParentConsole || allocatedConsole)
     {
         const wchar_t* helpText = TR(L""
-            L"AntiAFK-RBX v.4.0.0\r\n"
-            L"MIT License, by Agzes\r\n"
+            L"No AFK for Roblox v.4.0.0\r\n"
+            L"MIT License, by x0doit (based on AntiAFK-RBX by Agzes)\r\n"
             L"\r\n"
-            L"Usage: AntiAFK-RBX.exe [options]\r\n"
+            L"Usage: NoAFK.exe [options]\r\n"
             L"\r\n"
             L"Startup & UI:\r\n"
             L"  --no-splash                          Skip the splash screen on startup.\r\n"
@@ -1797,7 +1798,7 @@ void Splash_Paint_DrawFooter(HDC hdc, const RECT& clientRect, HFONT hFont10, HFO
     sfLeftBottom.SetAlignment(StringAlignmentNear);
     sfLeftBottom.SetLineAlignment(StringAlignmentFar);
     RectF byRectF((REAL)by_rect.left, (REAL)by_rect.top, (REAL)(by_rect.right - by_rect.left), (REAL)(by_rect.bottom - by_rect.top));
-    g.DrawString(TR(L"by Agzes"), -1, &font10, byRectF, &sfLeftBottom, &grayBrush);
+    g.DrawString(TR(L"by x0doit"), -1, &font10, byRectF, &sfLeftBottom, &grayBrush);
 
     RECT version_rect = { clientRect.left, clientRect.top, clientRect.right - 10, clientRect.bottom - 7 };
     StringFormat sfRightBottom;
@@ -2028,7 +2029,7 @@ void CreateSplashScreen(HINSTANCE hInstance)
     int winW = targetRect.right - targetRect.left;
     int winH = targetRect.bottom - targetRect.top;
 
-    g_hSplashWnd = CreateWindowEx(WS_EX_TOPMOST, SPLASH_CLASS_NAME, L"AntiAFK-RBX", WS_POPUP, x, y, winW, winH, NULL, NULL, hInstance, NULL);
+    g_hSplashWnd = CreateWindowEx(WS_EX_TOPMOST, SPLASH_CLASS_NAME, L"No AFK", WS_POPUP, x, y, winW, winH, NULL, NULL, hInstance, NULL);
 
     if (g_hSplashWnd)
     {
@@ -2107,7 +2108,7 @@ void About_Paint_DrawButtons(HDC hdc, const RECT& githubButtonRect, const RECT& 
     RectF githubRectF((REAL)githubButtonRect.left, (REAL)githubButtonRect.top, (REAL)(githubButtonRect.right - githubButtonRect.left), (REAL)(githubButtonRect.bottom - githubButtonRect.top));
     RectF sourceforgeRectF((REAL)sourceforgeButtonRect.left, (REAL)sourceforgeButtonRect.top, (REAL)(sourceforgeButtonRect.right - sourceforgeButtonRect.left), (REAL)(sourceforgeButtonRect.bottom - sourceforgeButtonRect.top));
     g.DrawString(L"GitHub", -1, &textFont, githubRectF, &sf, &textBrush);
-    g.DrawString(L"SourceForge", -1, &textFont, sourceforgeRectF, &sf, &textBrush);
+    g.DrawString(L"Discord", -1, &textFont, sourceforgeRectF, &sf, &textBrush);
 }
 void About_Paint_DrawUpdateLine(HDC hdc, const RECT& updateRect, HFONT hFont, const std::wstring& text, COLORREF color, bool isHovering) {
     Graphics g(hdc);
@@ -2152,8 +2153,8 @@ void About_Paint_DrawContent(HDC hdc, const RECT& clientRect, HFONT hFont28, HFO
     g.FillRectangle(&accentBrush, (REAL)headerRect.left, (REAL)headerRect.bottom, (REAL)(headerRect.right - headerRect.left), 1.0f);
 
     Font font28(hdc, hFont28);
-    const wchar_t* part1 = L"AntiAFK-";
-    const wchar_t* part2 = L"RBX";
+    const wchar_t* part1 = L"No";
+    const wchar_t* part2 = L"AFK";
 
     RectF s1, s2;
     PointF origin(0,0);
@@ -2167,7 +2168,7 @@ void About_Paint_DrawContent(HDC hdc, const RECT& clientRect, HFONT hFont28, HFO
     SolidBrush redBrush(Color(255, 226, 35, 26));
 
     g.DrawString(part1, -1, &font28, PointF(x_title, y_title), &whiteBrush);
-    g.DrawString(part2, -1, &font28, PointF(x_title + s1.Width * 0.9f + 3, y_title), &redBrush);
+    g.DrawString(part2, -1, &font28, PointF(x_title + s1.Width * 0.9f + 12, y_title), &redBrush);
 
     Font font12(hdc, hFont12);
     SolidBrush grayBrush(Color(255, 160, 160, 160));
@@ -2181,8 +2182,13 @@ void About_Paint_DrawContent(HDC hdc, const RECT& clientRect, HFONT hFont28, HFO
     g.DrawString(TR(L"The program for Anti-AFK and Multi-Instance in Roblox."), -1, &font12_c, descRectF, NULL, &textBrush);
 
     Font font12b_c(hdc, hFont12b);
-    RectF authorRectF((REAL)20, (REAL)contentY + 60, (REAL)(clientRect.right - 20), (REAL)100);
-    g.DrawString(TR(L"Developed with ❤ by Agzes\nLicensed under the MIT License"), -1, &font12_c, authorRectF, NULL, &grayBrush);
+    RectF authorRectF((REAL)20, (REAL)contentY + 55, (REAL)(clientRect.right - 40), (REAL)70);
+    g.DrawString(TR(L"Developed by x0doit\nBased on AntiAFK-RBX by Agzes (MIT License)"), -1, &font12_c, authorRectF, NULL, &grayBrush);
+
+    Font font10_c(hdc, hFont10);
+    SolidBrush storyBrush(Color(255, 130, 130, 130));
+    RectF storyRectF((REAL)20, (REAL)contentY + 130, (REAL)(clientRect.right - 40), (REAL)90);
+    g.DrawString(TR(L"Previously this project was developed by Agzes. Our views on where the app should go diverged, and that is how No AFK for Roblox came about."), -1, &font10_c, storyRectF, NULL, &storyBrush);
 }
 void About_Animation_TimerProc(HWND hwnd, AboutData* pData) {
     if (!pData) return;
@@ -2366,12 +2372,12 @@ LRESULT CALLBACK AboutWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         POINT pt = { LOWORD(lParam), HIWORD(lParam) };
         if (PtInRect(&pData->githubButtonRect, pt))
         {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             return 0;
         }
         if (PtInRect(&pData->sourceforgeButtonRect, pt))
         {
-            ShellExecute(NULL, L"open", L"https://sourceforge.net/projects/antiafk-rbx/", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://discord.gg/ayame", NULL, NULL, SW_SHOWNORMAL);
             return 0;
         }
         if (PtInRect(&pData->topCloseButtonRect, pt))
@@ -2555,7 +2561,7 @@ static LRESULT CALLBACK MutexErrorDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LP
     g.SetPixelOffsetMode(PixelOffsetModeHalf);
         g.SetTextRenderingHint(TextRenderingHintAntiAlias);
 
-        Popup_DrawChrome(&g, memDC, cr, d->closeButtonRect, d->hFontText, TR(L"AntiAFK-RBX • Multi-Instance Mutex"), d->hCloseX);
+        Popup_DrawChrome(&g, memDC, cr, d->closeButtonRect, d->hFontText, TR(L"No AFK • Multi-Instance Mutex"), d->hCloseX);
 
         Font textFont(memDC, d->hFontText);
         SolidBrush textBrush(Color(255, 220, 220, 220));
@@ -2566,7 +2572,7 @@ static LRESULT CALLBACK MutexErrorDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LP
             TR(L"multiple Roblox windows simultaneously."),
             L"",
             TR(L"Possible reasons for failure:"),
-            TR(L"• Roblox was started before AntiAFK-RBX"),
+            TR(L"• Roblox was started before No AFK"),
             TR(L"• Another app holds the mutex"),
             L"  (FishStrap, VoidStrap, Roblox Account Manager)",
             L"",
@@ -2666,7 +2672,7 @@ static LRESULT CALLBACK MutexErrorDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LP
         else if (PtInRect(&d->fullBtnRect, pt)) {
             int confirm =             ShowDarkMessageBox(hwnd,
                 TR(L"Close all Roblox windows and try again?\n\nAll running Roblox instances will be closed."),
-                TR(L"AntiAFK-RBX • Close All Roblox"),
+                TR(L"No AFK • Close All Roblox"),
                 MB_YESNO | MB_DEFBUTTON2);
             if (confirm == IDYES) {
                 d->tryCount++;
@@ -2727,7 +2733,7 @@ int ShowMutexErrorDialog(HWND owner)
     int screenW = GetSystemMetrics(SM_CXSCREEN), screenH = GetSystemMetrics(SM_CYSCREEN);
     int dlgW = 380, dlgH = 370;
     HWND h = CreateWindowEx(WS_EX_TOPMOST | WS_EX_APPWINDOW, DLG_CLASS,
-        TR(L"AntiAFK-RBX • Multi-Instance Mutex"), WS_POPUP,
+        TR(L"No AFK • Multi-Instance Mutex"), WS_POPUP,
         (screenW - dlgW) / 2, (screenH - dlgH) / 2, dlgW, dlgH,
         owner, NULL, g_hInst, NULL);
     if (!h) return 0;
@@ -2772,11 +2778,11 @@ void ShowAboutDialog(HWND owner)
     }
 
     int screenW = GetSystemMetrics(SM_CXSCREEN), screenH = GetSystemMetrics(SM_CYSCREEN);
-    int winW = 320, winH = 340;
+    int winW = 320, winH = 420;
     int x = (screenW - winW) / 2, y = (screenH - winH) / 2;
 
     HWND h = CreateWindowEx(WS_EX_TOPMOST | WS_EX_APPWINDOW, ABOUT_CLASS_NAME,
-        TR(L"AntiAFK-RBX • About"), WS_POPUP,
+        TR(L"No AFK • About"), WS_POPUP,
         x, y, winW, winH, owner, NULL, g_hInst, NULL);
 
     if (h)
@@ -3496,7 +3502,7 @@ LRESULT CALLBACK InstanceManagerWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
             ShowDarkMessageBox(hwnd, TR(L"Instance Manager allows you to configure per-instance overrides for each running Roblox client.\n\n"
                 L"You can change AFK, Mute, Opacity, Hide, FPS Cap, Reconnect, and Reset settings independently per window.\n\n"
                 L"Use Ctrl+Click to select multiple windows and apply settings to all of them at once.\n\n"
-                L"Presets allow you to save and quickly apply different configurations."),                 TR(L"AntiAFK-RBX • About Instance Manager"), MB_OK);
+                L"Presets allow you to save and quickly apply different configurations."),                 TR(L"No AFK • About Instance Manager"), MB_OK);
             return 0;
         }
 
@@ -4017,7 +4023,7 @@ LRESULT CALLBACK InstanceManagerWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
                 std::wstring msg = (tgts.size() == 1)
                     ? TR(L"Are you sure you want to close this Roblox client?")
                     : TR(L"Are you sure you want to close these ") + std::to_wstring((int)tgts.size()) + TR(L" Roblox clients?");
-                int res = ShowDarkMessageBox(hwnd, msg.c_str(), TR(L"AntiAFK-RBX • Close Roblox Client"), MB_YESNO);
+                int res = ShowDarkMessageBox(hwnd, msg.c_str(), TR(L"No AFK • Close Roblox Client"), MB_YESNO);
                 if (res == IDYES) {
                     for (HWND tWnd : tgts) {
                         if (IsWindow(tWnd)) PostMessage(tWnd, WM_CLOSE, 0, 0);
@@ -4094,7 +4100,7 @@ LRESULT CALLBACK InstanceManagerWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPAR
                 sf.SetAlignment(Gdiplus::StringAlignmentCenter);
                 sf.SetLineAlignment(Gdiplus::StringAlignmentCenter);
                 Gdiplus::RectF titleRect(0.0f, 0.0f, (REAL)cr.right, 30.0f);
-                gfx.DrawString(TR(L"AntiAFK-RBX • Instance Manager"), -1, &popupTitleFont, titleRect, &sf, &titleBrush);
+                gfx.DrawString(TR(L"No AFK • Instance Manager"), -1, &popupTitleFont, titleRect, &sf, &titleBrush);
                 MainUI_Paint_DrawCloseButton(memDC, pData->closeButtonRect, pData->isHoveringClose);
                 {
                     RECT& minBtn = pData->minimizeButtonRect;
@@ -4577,7 +4583,7 @@ void ShowInstanceManagerWindow(HWND owner) {
     int y = (screenH - winH) / 2;
 
     HWND h = CreateWindowEx(WS_EX_APPWINDOW, INST_CLASS_NAME,
-        TR(L"AntiAFK-RBX • Instance Manager"), WS_POPUP, x, y, winW, winH, owner, NULL, g_hInst, NULL);
+        TR(L"No AFK • Instance Manager"), WS_POPUP, x, y, winW, winH, owner, NULL, g_hInst, NULL);
 
     if (h) {
         g_hInstanceManagerDlg = h;
@@ -8222,7 +8228,7 @@ static void ShowRecordingOverlayWindow(HWND targetHwnd)
     g_recordingOverlayWnd = CreateWindowEx(
         WS_EX_TOPMOST | WS_EX_TOOLWINDOW | WS_EX_NOACTIVATE | WS_EX_LAYERED,
         RECORD_OVERLAY_CLASS,
-        TR(L"AntiAFK-RBX Stop Recording"),
+        TR(L"No AFK Stop Recording"),
         WS_POPUP | WS_VISIBLE,
         x, y, width, height,
         NULL, NULL, g_hInst, NULL);
@@ -8590,7 +8596,7 @@ static LRESULT CALLBACK MacroEngine_WizardProc(HWND hwnd, UINT msg, WPARAM wPara
             } else if (g_macroWizardStep == 2) {
                 g.DrawString(TR(L"Step 2/5 - Ready to Record"), -1, &titleFont,
                     Gdiplus::PointF(20.0f, 20.0f), &textBrush);
-                g.DrawString(TR(L"AntiAFK-RBX will resize your game to 800x600"), -1, &stepFont,
+                g.DrawString(TR(L"No AFK will resize your game to 800x600"), -1, &stepFont,
                     Gdiplus::PointF(20.0f, 65.0f), &textBrush);
                 g.DrawString(TR(L"and start recording your actions."), -1, &stepFont,
                     Gdiplus::PointF(20.0f, 88.0f), &textBrush);
@@ -8974,7 +8980,7 @@ void MacroEngine_ShowWizard(HWND parent, int startStep) {
 
     g_macroWizardHwnd = CreateWindowEx(
         WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
-        MACRO_WIZARD_CLASS, TR(L"AntiAFK-RBX • New Macro"),
+        MACRO_WIZARD_CLASS, TR(L"No AFK • New Macro"),
         WS_POPUP | WS_CAPTION | WS_SYSMENU,
         x, y, w, h, parent, NULL, g_hInst, NULL);
 
@@ -9095,7 +9101,7 @@ std::string GetSelfExePath() {
 void UpdateBloxstrapIntegration(bool enable) {
 std::string settingsPath = GetBloxstrapSettingsPath();
 if (settingsPath.empty()) {
-ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Could not find launcher installation path in registry."));
+ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Could not find launcher installation path in registry."));
 g_bloxstrapIntegration = false;
 return;
 }
@@ -9113,7 +9119,7 @@ settingsPathW = wbuf;
 
 std::ifstream inFile(settingsPathW.c_str(), std::ios::binary);
     if (!inFile.is_open()) {
-        ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Could not find/open the launcher settings file."));
+        ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Could not find/open the launcher settings file."));
         g_bloxstrapIntegration = false;
         return;
     }
@@ -9133,7 +9139,7 @@ std::ifstream inFile(settingsPathW.c_str(), std::ios::binary);
 
         std::string selfPath = EscapeJsonStringUtf8(GetSelfExePath());
         if (selfPath.empty()) {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Could not determine the application path."));
+            ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Could not determine the application path."));
             g_bloxstrapIntegration = false;
             return;
         }
@@ -9142,7 +9148,7 @@ std::ifstream inFile(settingsPathW.c_str(), std::ios::binary);
 
         size_t integrationsArrayPos = content.find("\"CustomIntegrations\": [");
         if (integrationsArrayPos == std::string::npos) {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Could not find 'CustomIntegrations' array in the launcher settings file."));
+            ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Could not find 'CustomIntegrations' array in the launcher settings file."));
             g_bloxstrapIntegration = false;
             return;
         }
@@ -9150,7 +9156,7 @@ std::ifstream inFile(settingsPathW.c_str(), std::ios::binary);
         size_t openingBracket = content.find('[', integrationsArrayPos);
         size_t closingBracket = (openingBracket == std::string::npos) ? std::string::npos : FindUnquotedJsonChar(content, openingBracket + 1, ']');
         if (openingBracket == std::string::npos || closingBracket == std::string::npos) {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Could not find 'CustomIntegrations' array bounds in the launcher settings file."));
+            ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Could not find 'CustomIntegrations' array bounds in the launcher settings file."));
             g_bloxstrapIntegration = false;
             return;
         }
@@ -9205,14 +9211,14 @@ std::ifstream inFile(settingsPathW.c_str(), std::ios::binary);
             outFile << content;
             outFile.close();
         } else {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Failed to write to the launcher settings file. Check permissions."));
+            ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Failed to write to the launcher settings file. Check permissions."));
             g_bloxstrapIntegration = false;
             return;
         }
     }
     if (!MoveFileExW(tmpPathW.c_str(), settingsPathW.c_str(), MOVEFILE_REPLACE_EXISTING)) {
         DeleteFileW(tmpPathW.c_str());
-        ShowTrayNotification(TR(L"AntiAFK-RBX • Integration Error"), TR(L"Failed to write to the launcher settings file. Check permissions."));
+        ShowTrayNotification(TR(L"No AFK • Integration Error"), TR(L"Failed to write to the launcher settings file. Check permissions."));
         g_bloxstrapIntegration = false;
     }
 }
@@ -10219,13 +10225,13 @@ void MonitorUserActivity()
 
                 if (anyReminderPending && g_afkReminderState.load() == 0)
                 {
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Reminder"), TR(L"A Roblox window has been inactive for 18 minutes. Starting AFK prevention soon."));
+                    ShowTrayNotification(TR(L"No AFK • Reminder"), TR(L"A Roblox window has been inactive for 18 minutes. Starting AFK prevention soon."));
                     g_afkReminderState = 1;
                 }
 
                 if (anyAutoStartPending && g_afkReminderState.load() < 2)
                 {
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Auto-Started"), TR(L"No Roblox activity detected for 19 minutes. Starting AFK prevention."));
+                    ShowTrayNotification(TR(L"No AFK • Auto-Started"), TR(L"No Roblox activity detected for 19 minutes. Starting AFK prevention."));
                     g_afkStartTime = GetTickCount64();
                     g_isAfkStarted = true;
                     {
@@ -10826,12 +10832,12 @@ std::wstring GetDiscordCompactVersionLabel()
 
 std::wstring GetGithubRepoUrl()
 {
-    return L"https://github.com/Agzes/AntiAFK-RBX";
+    return L"https://github.com/x0doit/No-AFK-for-Roblox";
 }
 
 std::wstring GetDiscordAuthorIconUrl()
 {
-    return L"https://raw.githubusercontent.com/Agzes/AntiAFK-RBX/refs/heads/main/Resources/tray-icon-off.png";
+    return L"https://raw.githubusercontent.com/x0doit/No-AFK-for-Roblox/refs/heads/main/Resources/tray-icon-off.png";
 }
 
 std::wstring BuildDiscordEmbedTitle(DiscordWebhookEvent eventType)
@@ -10948,7 +10954,7 @@ std::wstring BuildDiscordPlainContentLine(DiscordWebhookEvent eventType, const s
 {
     if (eventType == DiscordWebhookEvent::Started)
     {
-        return std::wstring(L"AntiAFK-RBX ") + GetDiscordCompactVersionLabel() + TR(L" • Started • ") + BuildDiscordStartedCompactInstancesLabel();
+        return std::wstring(L"No AFK ") + GetDiscordCompactVersionLabel() + TR(L" • Started • ") + BuildDiscordStartedCompactInstancesLabel();
     }
 
     std::wstring content = BuildDiscordAsciiDescription(eventType, summary);
@@ -10989,7 +10995,7 @@ std::wstring BuildDiscordPlainContentLine(DiscordWebhookEvent eventType, const s
         compact.pop_back();
     }
 
-    compact = std::wstring(L"AntiAFK-RBX ") + GetDiscordCompactVersionLabel() + L" • " + compact;
+    compact = std::wstring(L"No AFK ") + GetDiscordCompactVersionLabel() + L" • " + compact;
     return compact;
 }
 
@@ -11001,7 +11007,7 @@ std::string BuildDiscordWebhookPayloadJson(DiscordWebhookEvent eventType, const 
         ? "{\"parse\":[]}"
         : "{\"parse\":[\"everyone\",\"users\",\"roles\"]}";
 
-    std::wstring botNameUtf8W = L"AntiAFK-RBX";
+    std::wstring botNameUtf8W = L"No AFK";
     std::string botNameUtf8 = EscapeJsonStringUtf8(WideToUtf8(botNameUtf8W));
     std::string headFields;
     if (!g_discordUseDefaultName.load()) {
@@ -11035,7 +11041,7 @@ std::string BuildDiscordWebhookPayloadJson(DiscordWebhookEvent eventType, const 
 
     std::wstring title = BuildDiscordEmbedTitle(eventType);
     std::wstring description = BuildDiscordEmbedDescription(eventType, summary);
-    std::wstring authorName = L"AntiAFK-RBX " + GetDiscordCompactVersionLabel();
+    std::wstring authorName = L"No AFK " + GetDiscordCompactVersionLabel();
     std::wstring authorUrl = GetGithubRepoUrl();
     std::wstring authorIconUrl = GetDiscordAuthorIconUrl();
 
@@ -13324,7 +13330,7 @@ pos = comma + 1;
 
 static bool ExportSettingsToFile(HWND owner)
 {
-    wchar_t fileName[MAX_PATH] = L"AntiAFK-RBX-settings.json";
+    wchar_t fileName[MAX_PATH] = L"NoAFK-settings.json";
     OPENFILENAME ofn = { sizeof(ofn) };
     ofn.hwndOwner = owner;
     ofn.lpstrFilter = TR(L"JSON files (*.json)\0*.json\0All files (*.*)\0*.*\0");
@@ -13335,9 +13341,9 @@ static bool ExportSettingsToFile(HWND owner)
     if (!GetSaveFileName(&ofn)) return false;
     if (!SaveTextFileUtf8(fileName, BuildSettingsJson(CaptureSettingsSnapshot()))) return false;
 
-    int exportMacros = ShowDarkMessageBox(owner, TR(L"Also export macros?"), TR(L"AntiAFK-RBX • Export Settings"), MB_YESNO);
+    int exportMacros = ShowDarkMessageBox(owner, TR(L"Also export macros?"), TR(L"No AFK • Export Settings"), MB_YESNO);
     if (exportMacros == IDYES) {
-        wchar_t macroFile[MAX_PATH] = L"AntiAFK-RBX-macros.json";
+        wchar_t macroFile[MAX_PATH] = L"NoAFK-macros.json";
         OPENFILENAME ofn2 = { sizeof(ofn2) };
         ofn2.hwndOwner = owner;
         ofn2.lpstrFilter = TR(L"JSON files (*.json)\0*.json\0All files (*.*)\0*.*\0");
@@ -13351,7 +13357,7 @@ static bool ExportSettingsToFile(HWND owner)
             if (attrs != INVALID_FILE_ATTRIBUTES) {
                 CopyFileW(macrosSrc.c_str(), macroFile, FALSE);
             } else {
-                ShowDarkMessageBox(owner, TR(L"Macros file not found - nothing to export."), TR(L"AntiAFK-RBX • Export Settings"), MB_OK);
+                ShowDarkMessageBox(owner, TR(L"Macros file not found - nothing to export."), TR(L"No AFK • Export Settings"), MB_OK);
             }
         }
     }
@@ -13469,7 +13475,7 @@ static bool ImportSettingsFromFile(HWND owner)
                     ShowDarkMessageBox(owner,
                         TR(L"The imported settings contain a Discord webhook URL.\n\n"
                         L"Do you want to keep the imported webhook URL?"),
-                        TR(L"AntiAFK-RBX • Import Settings"), MB_YESNO) == IDYES
+                        TR(L"No AFK • Import Settings"), MB_YESNO) == IDYES
                         ? (s.discordWebhookUrl = importedUrl)
                         : (s.discordWebhookUrl = currentUrl);
                 } else {
@@ -13545,7 +13551,7 @@ static bool ImportSettingsFromFile(HWND owner)
         }
     }
 
-    int importMacros = ShowDarkMessageBox(owner, TR(L"Also import macros?"), TR(L"AntiAFK-RBX • Import Settings"), MB_YESNO);
+    int importMacros = ShowDarkMessageBox(owner, TR(L"Also import macros?"), TR(L"No AFK • Import Settings"), MB_YESNO);
     if (importMacros == IDYES) {
         wchar_t macroFile[MAX_PATH] = L"";
         OPENFILENAME ofn2 = { sizeof(ofn2) };
@@ -13571,7 +13577,7 @@ static bool ImportSettingsFromFile(HWND owner)
                 }
             }
             if (!validMacrosFile) {
-                ShowDarkMessageBox(owner, TR(L"The selected file is not a valid macros file."), TR(L"AntiAFK-RBX • Import Settings"), MB_OK);
+                ShowDarkMessageBox(owner, TR(L"The selected file is not a valid macros file."), TR(L"No AFK • Import Settings"), MB_OK);
             } else {
                 std::wstring macrosPath = MacroEngine_GetMacrosPath();
                 std::wstring backupPath = macrosPath + L".import-bak";
@@ -13587,12 +13593,12 @@ static bool ImportSettingsFromFile(HWND owner)
                         }
                         if (restored) {
                             DeleteFileW(backupPath.c_str());
-                            ShowDarkMessageBox(owner, TR(L"The imported macros file could not be parsed. Your previous macros were restored."), TR(L"AntiAFK-RBX • Import Settings"), MB_OK);
+                            ShowDarkMessageBox(owner, TR(L"The imported macros file could not be parsed. Your previous macros were restored."), TR(L"No AFK • Import Settings"), MB_OK);
                         } else {
                             DeleteFileW(macrosPath.c_str());
                             DeleteFileW(backupPath.c_str());
                             MacroEngine_LoadMacros();
-                            ShowDarkMessageBox(owner, TR(L"The imported macros file could not be parsed and no previous valid macros file existed - macros were reset."), TR(L"AntiAFK-RBX • Import Settings"), MB_OK);
+                            ShowDarkMessageBox(owner, TR(L"The imported macros file could not be parsed and no previous valid macros file existed - macros were reset."), TR(L"No AFK • Import Settings"), MB_OK);
                         }
                     } else {
                         DeleteFileW(backupPath.c_str());
@@ -13601,7 +13607,7 @@ static bool ImportSettingsFromFile(HWND owner)
                         InvalidateRect(g_hMainUiWnd, NULL, TRUE);
                     }
                 } else {
-                    ShowDarkMessageBox(owner, TR(L"Failed to import macros. The file may be locked or the destination is not writable."), TR(L"AntiAFK-RBX • Import Settings"), MB_OK);
+                    ShowDarkMessageBox(owner, TR(L"Failed to import macros. The file may be locked or the destination is not writable."), TR(L"No AFK • Import Settings"), MB_OK);
                 }
             }
         }
@@ -13626,13 +13632,13 @@ void CreateTrayMenu(bool afk)
     AnnouncementInfo announcement = GetAnnouncementCopy();
 
     HMENU InfoMenu = CreatePopupMenu();
-    AppendMenu(InfoMenu, MF_STRING, ID_ABOUT_MENU, TR(L"About AntiAFK-RBX"));
+    AppendMenu(InfoMenu, MF_STRING, ID_ABOUT_MENU, TR(L"About No AFK"));
     AppendMenu(InfoMenu, MF_STRING, ID_SHOW_TUTORIAL, TR(L"Show First Welcome"));
     AppendMenu(InfoMenu, MF_STRING, ID_LINKTTU, TR(L"[Link] - TipsToUse"));
     AppendMenu(InfoMenu, MF_STRING, ID_LINKWIKI, TR(L"[Link] - Wiki"));
     AppendMenu(InfoMenu, MF_STRING, ID_LINKGITHUB, TR(L"[Link] - GitHub"));
-    AppendMenu(InfoMenu, MF_STRING, ID_LINKSF, TR(L"[Link] - SourceForge"));
-    AppendMenu(g_hMenu, MF_STRING | MF_POPUP, (UINT_PTR)InfoMenu, TR(L"AntiAFK-RBX by Agzes"));
+    AppendMenu(InfoMenu, MF_STRING, ID_LINKSF, TR(L"[Link] - Discord"));
+    AppendMenu(g_hMenu, MF_STRING | MF_POPUP, (UINT_PTR)InfoMenu, TR(L"No AFK by x0doit"));
     {
         HBITMAP hAppBmp = CreateMenuIconFromAppIcon();
         g_menuIconBitmaps.push_back(hAppBmp);
@@ -13658,7 +13664,7 @@ void CreateTrayMenu(bool afk)
             AppendMenu(g_hMenu, MF_STRING, ID_GRID_SNAP, TR(L"Grid Snap Roblox*"));
             AppendMenu(g_hMenu, MF_SEPARATOR, 0, NULL);
         }
-        AppendMenu(g_hMenu, MF_STRING, ID_OPEN_UI, TR(L"Open AntiAFK-RBX"));
+        AppendMenu(g_hMenu, MF_STRING, ID_OPEN_UI, TR(L"Open No AFK"));
         AppendMenu(g_hMenu, MF_SEPARATOR, 0, NULL);
         {
             wchar_t hkStatus[128];
@@ -14238,7 +14244,7 @@ bool CheckForUpdates(bool showNotification = true)
         }
         g_updateFound = true;
         if (showNotification) {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Update Available"), TR(L"New version available! Download at: https://github.com/x0doit/AntiAFK-RBX/releases"));
+            ShowTrayNotification(TR(L"No AFK • Update Available"), TR(L"New version available! Download at: https://github.com/x0doit/No-AFK-for-Roblox/releases"));
         }
         if (g_hwnd) {
             QueueRefreshTrayMenu(g_isAfkStarted.load());
@@ -14273,12 +14279,12 @@ struct CustomInputDialogData {
 };
 
 std::wstring CustomInputDialog_GetMacroRenameTitle() {
-    std::wstring title = TR(L"AntiAFK-RBX • Rename Macro");
+    std::wstring title = TR(L"No AFK • Rename Macro");
     int sel = g_selectedMacroIndex.load();
     if (sel >= 0) {
         std::lock_guard<std::mutex> lock(g_macrosMutex);
         if (sel < (int)g_macros.size()) {
-            title = TR(L"AntiAFK-RBX • Rename Macro: ") + g_macros[sel].name;
+            title = TR(L"No AFK • Rename Macro: ") + g_macros[sel].name;
         }
     }
     return title;
@@ -15148,38 +15154,38 @@ LRESULT CALLBACK CustomInputDialogProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
         g.SetPixelOffsetMode(PixelOffsetModeHalf);
         g.SetTextRenderingHint(TextRenderingHintAntiAlias);
 
-        std::wstring macroRenameTitlePaint = TR(L"AntiAFK-RBX • Rename Macro");
+        std::wstring macroRenameTitlePaint = TR(L"No AFK • Rename Macro");
         if (pData->type == CustomInputDialogType::MacroRename) {
             macroRenameTitlePaint = CustomInputDialog_GetMacroRenameTitle();
         }
 
-        const wchar_t* titleText = (pData->type == CustomInputDialogType::Interval) ? TR(L"AntiAFK-RBX • Set Custom Interval") :
-                                   (pData->type == CustomInputDialogType::FpsLimit) ? TR(L"AntiAFK-RBX • Set FPS Limit") :
-                                   (pData->type == CustomInputDialogType::CpuLimitPercent) ? TR(L"AntiAFK-RBX • Set CPU Limit %") :
-                                   (pData->type == CustomInputDialogType::CpuLimitPeriod) ? TR(L"AntiAFK-RBX • Set Cycle Period (ms)") :
-                                   (pData->type == CustomInputDialogType::ProcessNames) ? TR(L"AntiAFK-RBX • Set Custom Search Names") :
-                                   (pData->type == CustomInputDialogType::GridModeValue) ? TR(L"AntiAFK-RBX • Grid Mode Value") :
-                                   (pData->type == CustomInputDialogType::GridSpacingBetween) ? TR(L"AntiAFK-RBX • Spacing Between Windows") :
-                                   (pData->type == CustomInputDialogType::GridSpacingBorders) ? TR(L"AntiAFK-RBX • Spacing From Borders") :
-                                   (pData->type == CustomInputDialogType::RamCleanInterval) ? TR(L"AntiAFK-RBX • Set Cycle Time") :
-                                   (pData->type == CustomInputDialogType::RamCleanLimit) ? TR(L"AntiAFK-RBX • Set RAM Limit") :
-                                   (pData->type == CustomInputDialogType::PreActionDelay) ? TR(L"AntiAFK-RBX • Delay Before Action (ms)") :
-                                   (pData->type == CustomInputDialogType::KeyPressDelay) ? TR(L"AntiAFK-RBX • Key Press Delay (ms)") :
-                                   (pData->type == CustomInputDialogType::PostActionDelay) ? TR(L"AntiAFK-RBX • Delay After Action (ms)") :
-                                   (pData->type == CustomInputDialogType::InstanceGeometry) ? TR(L"AntiAFK-RBX • Change Window Geometry") :
-                                   (pData->type == CustomInputDialogType::InstanceTitle) ? TR(L"AntiAFK-RBX • Rename Roblox Window") :
-                                   (pData->type == CustomInputDialogType::PresetName) ? TR(L"AntiAFK-RBX • Create New Preset") :
-                                   (pData->type == CustomInputDialogType::InstanceTimer) ? TR(L"AntiAFK-RBX • Custom AFK Timer (Instance)") :
-                                   (pData->type == CustomInputDialogType::MacroName) ? TR(L"AntiAFK-RBX • Enter Macro Name") :
+        const wchar_t* titleText = (pData->type == CustomInputDialogType::Interval) ? TR(L"No AFK • Set Custom Interval") :
+                                   (pData->type == CustomInputDialogType::FpsLimit) ? TR(L"No AFK • Set FPS Limit") :
+                                   (pData->type == CustomInputDialogType::CpuLimitPercent) ? TR(L"No AFK • Set CPU Limit %") :
+                                   (pData->type == CustomInputDialogType::CpuLimitPeriod) ? TR(L"No AFK • Set Cycle Period (ms)") :
+                                   (pData->type == CustomInputDialogType::ProcessNames) ? TR(L"No AFK • Set Custom Search Names") :
+                                   (pData->type == CustomInputDialogType::GridModeValue) ? TR(L"No AFK • Grid Mode Value") :
+                                   (pData->type == CustomInputDialogType::GridSpacingBetween) ? TR(L"No AFK • Spacing Between Windows") :
+                                   (pData->type == CustomInputDialogType::GridSpacingBorders) ? TR(L"No AFK • Spacing From Borders") :
+                                   (pData->type == CustomInputDialogType::RamCleanInterval) ? TR(L"No AFK • Set Cycle Time") :
+                                   (pData->type == CustomInputDialogType::RamCleanLimit) ? TR(L"No AFK • Set RAM Limit") :
+                                   (pData->type == CustomInputDialogType::PreActionDelay) ? TR(L"No AFK • Delay Before Action (ms)") :
+                                   (pData->type == CustomInputDialogType::KeyPressDelay) ? TR(L"No AFK • Key Press Delay (ms)") :
+                                   (pData->type == CustomInputDialogType::PostActionDelay) ? TR(L"No AFK • Delay After Action (ms)") :
+                                   (pData->type == CustomInputDialogType::InstanceGeometry) ? TR(L"No AFK • Change Window Geometry") :
+                                   (pData->type == CustomInputDialogType::InstanceTitle) ? TR(L"No AFK • Rename Roblox Window") :
+                                   (pData->type == CustomInputDialogType::PresetName) ? TR(L"No AFK • Create New Preset") :
+                                   (pData->type == CustomInputDialogType::InstanceTimer) ? TR(L"No AFK • Custom AFK Timer (Instance)") :
+                                   (pData->type == CustomInputDialogType::MacroName) ? TR(L"No AFK • Enter Macro Name") :
                                    (pData->type == CustomInputDialogType::MacroRename) ? macroRenameTitlePaint.c_str() :
-                                   (pData->type == CustomInputDialogType::MacroInterval) ? TR(L"AntiAFK-RBX • Set Macro Interval") :
-                                    (pData->type == CustomInputDialogType::ActionRepeatCount) ? TR(L"AntiAFK-RBX • Action Repeat Count") :
-                                    (pData->type == CustomInputDialogType::ReconnectInterval) ? TR(L"AntiAFK-RBX • Reconnect Check Interval (sec)") :
-                                    (pData->type == CustomInputDialogType::ReconnectMacroDelay) ? TR(L"AntiAFK-RBX • Reconnect Macro Delay (sec)") :
-                                    (pData->type == CustomInputDialogType::DiscordWebhookUrl) ? TR(L"AntiAFK-RBX • Set Webhook URL") :
-                                    (pData->type == CustomInputDialogType::DiscordHeartbeatInterval) ? TR(L"AntiAFK-RBX • Heartbeat Interval (min)") :
-                                    (pData->type == CustomInputDialogType::MultiInstanceInterval) ? TR(L"AntiAFK-RBX • Multi-Instance Delay (ms)") :
-                                    (pData->type == CustomInputDialogType::DiscordMentionTarget) ? TR(L"AntiAFK-RBX • Configure Mention Target") : TR(L"AntiAFK-RBX • Custom Input");
+                                   (pData->type == CustomInputDialogType::MacroInterval) ? TR(L"No AFK • Set Macro Interval") :
+                                    (pData->type == CustomInputDialogType::ActionRepeatCount) ? TR(L"No AFK • Action Repeat Count") :
+                                    (pData->type == CustomInputDialogType::ReconnectInterval) ? TR(L"No AFK • Reconnect Check Interval (sec)") :
+                                    (pData->type == CustomInputDialogType::ReconnectMacroDelay) ? TR(L"No AFK • Reconnect Macro Delay (sec)") :
+                                    (pData->type == CustomInputDialogType::DiscordWebhookUrl) ? TR(L"No AFK • Set Webhook URL") :
+                                    (pData->type == CustomInputDialogType::DiscordHeartbeatInterval) ? TR(L"No AFK • Heartbeat Interval (min)") :
+                                    (pData->type == CustomInputDialogType::MultiInstanceInterval) ? TR(L"No AFK • Multi-Instance Delay (ms)") :
+                                    (pData->type == CustomInputDialogType::DiscordMentionTarget) ? TR(L"No AFK • Configure Mention Target") : TR(L"No AFK • Custom Input");
         Popup_DrawChrome(&g, memDC, clientRect, pData->closeButtonRect, pData->hFontTitle, titleText, pData->isHoveringClose);
 
         RECT infoRect = { 0, 30, clientRect.right, 53 };
@@ -15545,33 +15551,33 @@ void ShowCustomInputDialog(HWND owner, CustomInputDialogType type)
         y = ownerRect.top + ((ownerRect.bottom - ownerRect.top) - dlgH) / 2;
     }
 
-    std::wstring macroRenameTitle = TR(L"AntiAFK-RBX • Rename Macro");
+    std::wstring macroRenameTitle = TR(L"No AFK • Rename Macro");
     if (type == CustomInputDialogType::MacroRename) {
         macroRenameTitle = CustomInputDialog_GetMacroRenameTitle();
     }
 
-    const wchar_t* titleStr = (type == CustomInputDialogType::Interval) ? TR(L"AntiAFK-RBX • Set Custom Interval") :
-                              (type == CustomInputDialogType::FpsLimit) ? TR(L"AntiAFK-RBX • Set FPS Limit") :
-                              (type == CustomInputDialogType::ProcessNames) ? TR(L"AntiAFK-RBX • Set Custom Search Names") :
-                              (type == CustomInputDialogType::GridModeValue) ? TR(L"AntiAFK-RBX • Grid Mode Value") :
-                              (type == CustomInputDialogType::GridSpacingBetween) ? TR(L"AntiAFK-RBX • Spacing Between Windows") :
-                              (type == CustomInputDialogType::GridSpacingBorders) ? TR(L"AntiAFK-RBX • Spacing From Borders") :
-                              (type == CustomInputDialogType::RamCleanInterval) ? TR(L"AntiAFK-RBX • Set Cycle Time") :
-                              (type == CustomInputDialogType::DiscordMentionTarget) ? TR(L"AntiAFK-RBX • Configure Mention Target") :
-                              (type == CustomInputDialogType::PreActionDelay) ? TR(L"AntiAFK-RBX • Delay Before Action (ms)") :
-                              (type == CustomInputDialogType::KeyPressDelay) ? TR(L"AntiAFK-RBX • Key Press Delay (ms)") :
-                              (type == CustomInputDialogType::PostActionDelay) ? TR(L"AntiAFK-RBX • Delay After Action (ms)") :
-                              (type == CustomInputDialogType::ActionRepeatCount) ? TR(L"AntiAFK-RBX • Action Repeat Count") :
-                              (type == CustomInputDialogType::ReconnectInterval) ? TR(L"AntiAFK-RBX • Reconnect Check Interval (sec)") :
-                              (type == CustomInputDialogType::ReconnectMacroDelay) ? TR(L"AntiAFK-RBX • Reconnect Macro Delay (sec)") :
-                              (type == CustomInputDialogType::CpuLimitPercent) ? TR(L"AntiAFK-RBX • Set CPU Limit %") :
-                              (type == CustomInputDialogType::CpuLimitPeriod) ? TR(L"AntiAFK-RBX • Set Cycle Period (ms)") :
-                              (type == CustomInputDialogType::InstanceGeometry) ? TR(L"AntiAFK-RBX • Change Window Geometry") :
-                              (type == CustomInputDialogType::InstanceTitle) ? TR(L"AntiAFK-RBX • Rename Roblox Window") :
-                              (type == CustomInputDialogType::PresetName) ? TR(L"AntiAFK-RBX • Create New Preset") :
-                              (type == CustomInputDialogType::MacroName) ? TR(L"AntiAFK-RBX • Enter Macro Name") :
+    const wchar_t* titleStr = (type == CustomInputDialogType::Interval) ? TR(L"No AFK • Set Custom Interval") :
+                              (type == CustomInputDialogType::FpsLimit) ? TR(L"No AFK • Set FPS Limit") :
+                              (type == CustomInputDialogType::ProcessNames) ? TR(L"No AFK • Set Custom Search Names") :
+                              (type == CustomInputDialogType::GridModeValue) ? TR(L"No AFK • Grid Mode Value") :
+                              (type == CustomInputDialogType::GridSpacingBetween) ? TR(L"No AFK • Spacing Between Windows") :
+                              (type == CustomInputDialogType::GridSpacingBorders) ? TR(L"No AFK • Spacing From Borders") :
+                              (type == CustomInputDialogType::RamCleanInterval) ? TR(L"No AFK • Set Cycle Time") :
+                              (type == CustomInputDialogType::DiscordMentionTarget) ? TR(L"No AFK • Configure Mention Target") :
+                              (type == CustomInputDialogType::PreActionDelay) ? TR(L"No AFK • Delay Before Action (ms)") :
+                              (type == CustomInputDialogType::KeyPressDelay) ? TR(L"No AFK • Key Press Delay (ms)") :
+                              (type == CustomInputDialogType::PostActionDelay) ? TR(L"No AFK • Delay After Action (ms)") :
+                              (type == CustomInputDialogType::ActionRepeatCount) ? TR(L"No AFK • Action Repeat Count") :
+                              (type == CustomInputDialogType::ReconnectInterval) ? TR(L"No AFK • Reconnect Check Interval (sec)") :
+                              (type == CustomInputDialogType::ReconnectMacroDelay) ? TR(L"No AFK • Reconnect Macro Delay (sec)") :
+                              (type == CustomInputDialogType::CpuLimitPercent) ? TR(L"No AFK • Set CPU Limit %") :
+                              (type == CustomInputDialogType::CpuLimitPeriod) ? TR(L"No AFK • Set Cycle Period (ms)") :
+                              (type == CustomInputDialogType::InstanceGeometry) ? TR(L"No AFK • Change Window Geometry") :
+                              (type == CustomInputDialogType::InstanceTitle) ? TR(L"No AFK • Rename Roblox Window") :
+                              (type == CustomInputDialogType::PresetName) ? TR(L"No AFK • Create New Preset") :
+                              (type == CustomInputDialogType::MacroName) ? TR(L"No AFK • Enter Macro Name") :
                               (type == CustomInputDialogType::MacroRename) ? macroRenameTitle.c_str() :
-                              (type == CustomInputDialogType::MacroInterval) ? TR(L"AntiAFK-RBX • Set Macro Interval") : TR(L"AntiAFK-RBX • Set RAM Limit");
+                              (type == CustomInputDialogType::MacroInterval) ? TR(L"No AFK • Set Macro Interval") : TR(L"No AFK • Set RAM Limit");
 
     if (!pGlobalWnd) return;
 
@@ -15609,9 +15615,9 @@ static std::vector<std::wstring> g_macroOrderNames;
 
 static const wchar_t* MacroOrder_TitleText(MacroOrderListType t) {
     switch (t) {
-        case MacroOrderListType::AfkAction: return TR(L"AntiAFK-RBX • Macro Order: AFK Action");
-        case MacroOrderListType::Reconnect: return TR(L"AntiAFK-RBX • Macro Order: Reconnect");
-        default: return TR(L"AntiAFK-RBX • Macro Order: Interval");
+        case MacroOrderListType::AfkAction: return TR(L"No AFK • Macro Order: AFK Action");
+        case MacroOrderListType::Reconnect: return TR(L"No AFK • Macro Order: Reconnect");
+        default: return TR(L"No AFK • Macro Order: Interval");
     }
 }
 
@@ -16189,15 +16195,15 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         if (PtInRect(&pData->closeButtonRect, pt)) { PostMessage(hwnd, WM_COMMAND, ID_BTN_NEXT, 0); return 0; }
         if (PtInRect(&pData->nextButtonRect, pt)) { PostMessage(hwnd, WM_COMMAND, ID_BTN_NEXT, 0); return 0; }
         if (PtInRect(&pData->discordLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://agzes.github.io/go/to/discord", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://discord.gg/ayame", NULL, NULL, SW_SHOWNORMAL);
             return 0;
         }
         if (PtInRect(&pData->githubLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/issues/new", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             return 0;
         }
         if (PtInRect(&pData->helpDemoRect, pt)) {
-            ShowDarkMessageBox(hwnd, TR(L"These are contextual help buttons placed next to settings in the main window.\n\nClick any ? to get a quick explanation of what that option does, without leaving the app."), TR(L"AntiAFK-RBX • What are ? buttons?"), MB_OK);
+            ShowDarkMessageBox(hwnd, TR(L"These are contextual help buttons placed next to settings in the main window.\n\nClick any ? to get a quick explanation of what that option does, without leaving the app."), TR(L"No AFK • What are ? buttons?"), MB_OK);
             return 0;
         }
 
@@ -16224,7 +16230,7 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         switch (LOWORD(wParam))
         {
         case ID_LINKGITHUB:
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             break;
         case ID_LINKWIKI_TUTORIAL:
             ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/wiki/User-Safe-Mode", NULL, NULL, SW_SHOWNORMAL);
@@ -16272,7 +16278,7 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
         g.SetSmoothingMode(SmoothingModeAntiAlias);
         g.SetPixelOffsetMode(PixelOffsetModeHalf);
         g.SetTextRenderingHint(TextRenderingHintAntiAlias);
-        Popup_DrawChrome(&g, memDC, clientRect, pData->closeButtonRect, pData->hFontTitle, TR(L"AntiAFK-RBX • First Welcome"), pData->isHoveringClose);
+        Popup_DrawChrome(&g, memDC, clientRect, pData->closeButtonRect, pData->hFontTitle, TR(L"No AFK • First Welcome"), pData->isHoveringClose);
 
         {
             Region oldClip;
@@ -16324,15 +16330,15 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             int y_welcome = 46;
             g.DrawString(TR(L"Welcome to"), -1, &font11, PointF((REAL)margin + 4.0f, (REAL)y_welcome), typographic, &grayBrush);
 
-            const wchar_t* p1 = L"AntiAFK-";
-            const wchar_t* p2 = L"RBX";
+            const wchar_t* p1 = L"No";
+            const wchar_t* p2 = L"AFK";
             RectF s1, s2;
             g.MeasureString(p1, -1, &font40, PointF(0,0), typographic, &s1);
             g.MeasureString(p2, -1, &font40, PointF(0,0), typographic, &s2);
 
             int y_logo = 58;
             g.DrawString(p1, -1, &font40, PointF((REAL)margin + 1.0f, (REAL)y_logo), typographic, &whiteBrush);
-            g.DrawString(p2, -1, &font40, PointF((REAL)margin + 1.0f + s1.Width, (REAL)y_logo), typographic, &redBrush);
+            g.DrawString(p2, -1, &font40, PointF((REAL)margin + 1.0f + s1.Width + s1.Height * 0.25f, (REAL)y_logo), typographic, &redBrush);
 
             {
                 HFONT hVerFont = CreateFont(-14, 0, 0, 0, FW_SEMIBOLD, TRUE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, DEFAULT_PITCH, L"Segoe UI");
@@ -16358,7 +16364,7 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             int y_launch_steps = 188;
             RectF rSteps((REAL)margin, (REAL)y_launch_steps, (REAL)colW, 100.0f);
             g.DrawString(
-                TR(L"1. Open AntiAFK-RBX.\n"
+                TR(L"1. Open No AFK.\n"
                 L"2. Configure the settings.\n"
                 L"3. Open Roblox.\n"
                 L"4. Press Start."),
@@ -16445,7 +16451,7 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 
             const wchar_t* discordText = TR(L"Join our Discord server");
             const wchar_t* orText = TR(L"or");
-            const wchar_t* githubText = TR(L"Create issue on GitHub");
+            const wchar_t* githubText = TR(L"Open the project on GitHub");
             Font smallFont(memDC, pData->hFont11);
             SolidBrush orBrush(Color(255, 160, 160, 160));
 
@@ -16562,7 +16568,7 @@ void ShowTutorialDialog(HWND owner)
         wc.hCursor = LoadCursor(NULL, IDC_ARROW);
         registered = RegisterClass(&wc) != 0;
     }
-    HWND h = CreateWindowEx(WS_EX_TOPMOST | WS_EX_APPWINDOW, L"AntiAFK-RBX-Tutorial", TR(L"AntiAFK-RBX • First Welcome"), WS_POPUP, CW_USEDEFAULT, CW_USEDEFAULT, 560, 370, owner, NULL, g_hInst, NULL);
+    HWND h = CreateWindowEx(WS_EX_TOPMOST | WS_EX_APPWINDOW, L"AntiAFK-RBX-Tutorial", TR(L"No AFK • First Welcome"), WS_POPUP, CW_USEDEFAULT, CW_USEDEFAULT, 560, 370, owner, NULL, g_hInst, NULL);
     if (h) { g_tutorialWnd = h; ShowWindow(h, SW_SHOW); UpdateWindow(h); }
 }
 // ==========
@@ -16600,7 +16606,7 @@ void ShowMainUIDialog(HWND owner)
     int winH = targetRect.bottom - targetRect.top;
 
     g_hMainUiWnd = CreateWindowEx(WS_EX_APPWINDOW, MAINUI_CLASS_NAME,
-        L"AntiAFK-RBX", WS_POPUP,
+        L"No AFK", WS_POPUP,
         x, y, winW, winH, owner, NULL, g_hInst, NULL);
 
     if (g_hMainUiWnd)
@@ -17338,7 +17344,7 @@ LRESULT CALLBACK ScreenSaverWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
                     int bCol = (int)(255 * std::fabs(std::sin((h + 240) * 3.14159265f / 180.0f)));
 
                     Font textFont(hdcMem, g_ssMainFont);
-                    std::wstring ssText = TR(L"AntiAFK-RBX • Screen Saver");
+                    std::wstring ssText = TR(L"No AFK • Screen Saver");
 
                     if (g_ssTextW <= 0.0f) {
                         RectF textBounds;
@@ -17551,7 +17557,7 @@ void ScreenSaver_Start(HWND owner)
             HWND h = CreateWindowEx(
                 WS_EX_TOPMOST | WS_EX_APPWINDOW | WS_EX_NOACTIVATE,
                 L"AntiAFK-RBX-ScreenSaver",
-                TR(L"AntiAFK-RBX • Screen Saver"),
+                TR(L"No AFK • Screen Saver"),
                 WS_POPUP | WS_VISIBLE,
                 mi.rcMonitor.left, mi.rcMonitor.top, W, H,
                 NULL, NULL, p->hInst, NULL);
@@ -17662,7 +17668,7 @@ int MeasureStatusBarContentWidth(const std::wstring& message, int dpiY)
         width += MulDiv(10, dpiY, 96) + MulDiv(14, dpiY, 96) + MulDiv(10, dpiY, 96);
     }
     if (showBrand) {
-        width += MeasureTextWidth(hdc, brandFont, L"AntiAFK-RBX") + 6 + MeasureTextWidth(hdc, textFont, L"•") + 6;
+        width += MeasureTextWidth(hdc, brandFont, L"No AFK") + 6 + MeasureTextWidth(hdc, textFont, L"•") + 6;
     }
     width += MeasureTextWidth(hdc, textFont, message);
     width += MulDiv(100, dpiY, 96);
@@ -18057,7 +18063,7 @@ void StatusBar_Paint(HDC hdc, const RECT& clientRect, StatusBarData* pData)
     SolidBrush brandBrush(Color(255, 255, 255, 255));
     SolidBrush textBrush(Color(255, GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
 
-    const wchar_t* brand = L"AntiAFK-RBX";
+    const wchar_t* brand = L"No AFK";
     const wchar_t* separator = L"•";
     const REAL brandSepGap = 6.0f;
     const REAL sepMsgGap = 6.0f;
@@ -19348,11 +19354,11 @@ title = TR(L"CPU Limit %");
             return;
         }
         if (pData->alphaInfoGitHubLinkRect.right > 0 && PtInRect(&pData->alphaInfoGitHubLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         if (pData->alphaInfoDiscordLinkRect.right > 0 && PtInRect(&pData->alphaInfoDiscordLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://agzes.github.io/go/to/discord", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://discord.gg/ayame", NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         if (pData->alphaInfoReleasesLinkRect.right > 0 && PtInRect(&pData->alphaInfoReleasesLinkRect, pt)) {
@@ -19698,7 +19704,7 @@ title = TR(L"CPU Limit %");
                 return;
             }
             if (pData->macrosHelpBtnRect.left != 0 && PtInRect(&pData->macrosHelpBtnRect, pt)) {
-                ShowDarkMessageBox(hwnd, TR(L"While the mouse button is held, AntiAFK-RBX also records the cursor movement path for more realistic playback.\n\nDisable this option to record only clicks and key presses."), TR(L"Record Mouse Movements"), MB_OK);
+                ShowDarkMessageBox(hwnd, TR(L"While the mouse button is held, No AFK also records the cursor movement path for more realistic playback.\n\nDisable this option to record only clicks and key presses."), TR(L"Record Mouse Movements"), MB_OK);
                 return;
             }
         } else if (pData->macrosViewMode == 3) {
@@ -19782,14 +19788,14 @@ title = TR(L"CPU Limit %");
                     title = TR(L"Multi-Instance Delay");
                     text = TR(L"Delay between handling each Roblox window in multi-instance mode.\n\nUse 'Minimum' for the fastest switching. Increase if windows are skipped, focus feels unstable, or Roblox doesn't react reliably on your PC.");
                 } else if (pData->settingsSubKind == 2) {
-                    if (i == 0) { title = TR(L"RAM Cleaner Mode"); text = TR(L"How and when AntiAFK-RBX optimizes Roblox memory.\n\n- Smart Clean: trims RAM only when usage exceeds your threshold.\n- Time Cycle: cleans at fixed intervals.\n- Hybrid: both, max stability for long multi-instance sessions."); }
+                    if (i == 0) { title = TR(L"RAM Cleaner Mode"); text = TR(L"How and when No AFK optimizes Roblox memory.\n\n- Smart Clean: trims RAM only when usage exceeds your threshold.\n- Time Cycle: cleans at fixed intervals.\n- Hybrid: both, max stability for long multi-instance sessions."); }
                     else if (i == 1) { title = TR(L"Clean Cycle Time"); text = TR(L"Fixed interval (in seconds) used by 'Time Cycle' and 'Hybrid' RAM Cleaner strategies between memory optimizations."); }
                     else { title = TR(L"RAM Limit"); text = TR(L"Usage threshold (in MB) used by 'Smart Clean' and 'Hybrid' strategies: memory is optimized when a Roblox process exceeds it."); }
                 } else if (pData->settingsSubKind == 3) {
                     title = TR(L"Reconnect Interval");
                     text = TR(L"How often Auto Reconnect checks for a kick/disconnect dialog independently from the main Anti-AFK cycle.\n\n- Off (main cycle): checks only during each Anti-AFK action cycle.\n- 30 sec / 1 min / 2 min / 5 min / 10 min: independent timer checks more frequently.\n- Custom: enter any value in seconds.\n\nInterval checks run WITHOUT stealing focus from other windows. Only when a kick dialog is detected, the window is briefly focused to click Reconnect.\n\nManual check (button / tray) always works WITH focus.");
                 } else if (pData->settingsSubKind == 4) {
-                    if (i == 0) { title = TR(L"Disable Splash-Screen"); text = TR(L"Skips the animated loading window (and the MainUI startup overlay) when AntiAFK-RBX starts.\n\nThe app still finishes all startup tasks in the background. Turn this off to see loading progress again."); }
+                    if (i == 0) { title = TR(L"Disable Splash-Screen"); text = TR(L"Skips the animated loading window (and the MainUI startup overlay) when No AFK starts.\n\nThe app still finishes all startup tasks in the background. Turn this off to see loading progress again."); }
                     else if (i == 1) { title = TR(L"Disable Acrylic Blur"); text = TR(L"Replaces the blurred acrylic window background with a solid dark one (applied immediately).\n\nBlur can hurt readability on busy desktops and costs a little GPU compositing on some setups."); }
                     else if (i == 2) { title = TR(L"Disable UI Animations"); text = TR(L"Makes all interface transitions instant: page switches, sub-window open/close, toggle knobs and fades.\n\nRecommended on slow machines or if you prefer zero-movement UI."); }
                     else if (i == 3) { title = TR(L"Disable Tray Notifications"); text = TR(L"Hides balloon notifications shown near the tray icon (start/stop, errors, update found).\n\nThe Status Bar overlay and Discord webhooks are not affected and stay independent."); }
@@ -20045,10 +20051,10 @@ title = TR(L"CPU Limit %");
                 const wchar_t* text = L"";
                 if (i == 0) {
                     title = TR(L"App icon");
-                    text = TR(L"Shows the AntiAFK-RBX logo on the left side of the Status Bar overlay.\n\nTurn off for a more minimal look.");
+                    text = TR(L"Shows the No AFK logo on the left side of the Status Bar overlay.\n\nTurn off for a more minimal look.");
                 } else if (i == 1) {
                     title = TR(L"Program name");
-                    text = TR(L"Shows the AntiAFK-RBX name inside the Status Bar overlay.\n\nTurn it off if you want the overlay to show only the event text (useful for screen recordings and streams).");
+                    text = TR(L"Shows the No AFK name inside the Status Bar overlay.\n\nTurn it off if you want the overlay to show only the event text (useful for screen recordings and streams).");
                 } else if (i == 2) {
                     title = TR(L"Events: Start & Stop");
                     text = TR(L"Session lifecycle messages:\n\n- Anti-AFK started / stopped manually\n- Auto-started when Roblox opens or after inactivity\n- Auto-stopped when Roblox closes or window is not found");
@@ -20150,7 +20156,7 @@ title = TR(L"CPU Limit %");
         if (webhookEnabled && PtInRect(&pData->discordWebhookPasteRect, pt)) {
             std::wstring clipboardText;
             if (!ReadUnicodeTextFromClipboard(hwnd, clipboardText)) {
-                ShowDarkMessageBox(hwnd, TR(L"Clipboard does not contain Unicode text right now."), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+                ShowDarkMessageBox(hwnd, TR(L"Clipboard does not contain Unicode text right now."), TR(L"No AFK • Discord Webhook"), MB_OK);
                 return;
             }
 
@@ -20178,7 +20184,7 @@ title = TR(L"CPU Limit %");
         if (webhookEnabled && PtInRect(&pData->discordWebhookTestRect, pt)) {
             std::wstring webhookUrl = GetDiscordWebhookUrlCopy();
             if (!IsDiscordWebhookUrl(webhookUrl)) {
-                ShowDarkMessageBox(hwnd, TR(L"Enter a valid Discord webhook URL first."), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+                ShowDarkMessageBox(hwnd, TR(L"Enter a valid Discord webhook URL first."), TR(L"No AFK • Discord Webhook"), MB_OK);
                 return;
             }
 
@@ -20234,8 +20240,8 @@ title = TR(L"CPU Limit %");
             const wchar_t* title = TR(L"Help");
             const wchar_t* text = TR(L"No help text available for this setting.");
             if (pData->currentPage == 0) { // General
-                if (i == 0) { title = TR(L"Interval"); text = TR(L"How often AntiAFK-RBX performs Anti-AFK actions.\n\nRoblox kicks after 20 minutes of inactivity, so the interval must stay below 20 min. \nLower = more actions \nHigher = fewer actions \n\nRecommended: 9 minutes."); }
-                if (i == 1) { title = TR(L"Action"); text = TR(L"Which input AntiAFK-RBX simulates to keep active.\n\n- Space (Jump): press Space - works in most games.\n- W/S: forward/back - good where Space does nothing.\n- Zoom (I/O): press I and O - good for no-move games.\n- Random*: randomly picks Space, W/S, or Zoom each cycle without repeats (experimental).\n\nSwitch if one is ignored or causes unwanted behavior.\n\nRecommended: Space or W/S"); }
+                if (i == 0) { title = TR(L"Interval"); text = TR(L"How often No AFK performs Anti-AFK actions.\n\nRoblox kicks after 20 minutes of inactivity, so the interval must stay below 20 min. \nLower = more actions \nHigher = fewer actions \n\nRecommended: 9 minutes."); }
+                if (i == 1) { title = TR(L"Action"); text = TR(L"Which input No AFK simulates to keep active.\n\n- Space (Jump): press Space - works in most games.\n- W/S: forward/back - good where Space does nothing.\n- Zoom (I/O): press I and O - good for no-move games.\n- Random*: randomly picks Space, W/S, or Zoom each cycle without repeats (experimental).\n\nSwitch if one is ignored or causes unwanted behavior.\n\nRecommended: Space or W/S"); }
                 if (i == 2) { title = TR(L"Multi-Instance bypass"); text = TR(L"Lets you run multiple Roblox windows at once by holding a system mutex.\n\nAnti-AFK still works on EVERY opened Roblox window even when bypass is off - it just doesn't unlock multi-launch.\n\nClose all Roblox windows before toggling."); }
                 if (i == 3) { title = TR(L"Macros"); text = TR(L"Create and manage custom macro actions.\n\nMacros can record clicks, key presses, and mouse movements. When triggered on AFK cooldown or after reconnect, the game window is temporarily resized to 800x600 for perfect playback, then restored.\n\nClick 'New' to open the macro wizard, select a macro to use as 'Custom Macro*' in the Action menu."); }
                 if (i == 4) { title = TR(L"Instance Manager (Beta)"); text = TR(L"Per-instance Anti-AFK, mute, opacity, FPS cap, hide, reconnect & reset settings.\n\nCreate presets with custom overrides per Roblox window (identified by title). Powerful for multi-instance setups."); }
@@ -20246,26 +20252,26 @@ title = TR(L"CPU Limit %");
                 if (i == 1) { title = TR(L"Auto Reconnect*"); text = TR(L"Experimental: tries to press Roblox's reconnect button after an idle kick or similar disconnect.\n\nUseful for unattended sessions, but depends on the reconnect screen being visible and detected correctly. May fail on custom dialogs or when Roblox UI changes.\n\nFocus behavior:\n- Independent interval check: detects the kick dialog WITHOUT stealing focus. If detected, it brings the window to front only to click the Reconnect button.\n- Manual check (button / tray) and the check during the main Anti-AFK cycle: works WITH focus on the Roblox window, same as the Anti-AFK action itself.\n\nSet an independent interval to check more frequently than the main cycle (e.g. every 2 min instead of every 9 min)."); }
                 if (i == 2) { title = TR(L"Reset in all"); text = TR(L"Sends Esc > R > Enter each Anti-AFK cycle to respawn your character.\n\nUsed in unique situations, so no recommendations :/. Use only in games where respawning is harmless (obby, simulator, etc.)."); }
                 if (i == 3) { title = TR(L"Hide/Show Roblox"); text = TR(L"Hides Roblox windows (not minimizes) when Anti-AFK starts, so they run in the background without stealing focus or cluttering the taskbar.\n\nShow them again from the tray menu or the Show Roblox button. Windows are not closed - they keep running."); }
-                if (i == 4) { title = TR(L"Enable Opacity"); text = TR(L"Applies 70% opacity to all current and future Roblox windows during the Anti-AFK session.\n\nVisual reminder that AntiAFK-RBX is in control. New Roblox windows opened later automatically match, so you don't have to toggle it manually each time.\n\nWarning: when combined with Auto-Reconnect, the kick-dialog screen-grabber may mis-read the dark transparent window as the kick dialog and skip the reconnect. If Reconnect stops working reliably, disable Opacity first."); }
+                if (i == 4) { title = TR(L"Enable Opacity"); text = TR(L"Applies 70% opacity to all current and future Roblox windows during the Anti-AFK session.\n\nVisual reminder that No AFK is in control. New Roblox windows opened later automatically match, so you don't have to toggle it manually each time.\n\nWarning: when combined with Auto-Reconnect, the kick-dialog screen-grabber may mis-read the dark transparent window as the kick dialog and skip the reconnect. If Reconnect stops working reliably, disable Opacity first."); }
                 if (i == 5) { title = TR(L"Grid Roblox*"); text = TR(L"Experimental: auto-arranges Roblox windows in a grid layout whenever the set of detected windows changes (a window opens, closes, or moves).\n\nEspecially helpful for multi-instance setups. Click the gear icon to choose columns, screen, padding, and which monitor to use."); }
                 if (i == 6) { title = TR(L"Mute Roblox"); text = TR(L"Mutes every detected Roblox window when Anti-AFK starts, restores audio when it stops."); }
                 if (i == 7) { title = TR(L"FPS Capper (CPU Limiter)"); text = TR(L"Lowers Roblox's CPU usage by suspending threads in a duty cycle (like BES), capping the FPS to reduce heat.\n\nPresets: 3, 5, 7, 10, 15 FPS or a custom value (0-60). Works by influencing process timing, so the actual FPS may fluctuate around the cap."); }
                 if (i == 8) { title = TR(L"RAM Cleaner"); text = TR(L"Automatically optimizes Roblox's RAM usage to keep clients low-RAM during long sessions.\n\nChoose the strategy and thresholds in Advanced > RAM Cleaner Mode. Smart Clean reacts to RAM spikes, Time Cycle runs on a fixed timer, Hybrid does both."); };
             } else if (pData->currentPage == 2) { // Misc
-                if (i == 0) { title = TR(L"Update/Announcement Checker"); text = TR(L"Checks for AntiAFK-RBX updates and announcements on startup.\n\nManual check is still available from About window. Disable only if you're on a restricted/offline setup - disabling means you won't get critical bug-fix or security notices."); }
+                if (i == 0) { title = TR(L"Update/Announcement Checker"); text = TR(L"Checks for No AFK updates and announcements on startup.\n\nManual check is still available from About window. Disable only if you're on a restricted/offline setup - disabling means you won't get critical bug-fix or security notices."); }
                 if (i == 1) { title = TR(L"Close All Roblox"); text = TR(L"Closes every running Roblox window at once.\n\nSends a normal close request first, then force-terminates any that ignore it."); }
                 if (i == 2) { title = TR(L"Do Not Sleep"); text = TR(L"Prevents Windows from putting the PC to sleep (and the monitor too) while Anti-AFK is active.\n\nHelpful for long unattended sessions and laptops that would otherwise sleep mid-game. Disables itself automatically when Anti-AFK stops."); }
                 if (i == 3) { title = TR(L"I Can Forget"); text = TR(L"Safety net for people who often forget to start Anti-AFK manually.\n\nWhile Roblox is open, the app watches for inactivity: shows a reminder at 18 min, auto-starts Anti-AFK at 19 min to beat the 20-min idle kick. Combine with Auto-Start Anti-AFK for full hands-off.\n\nInactivity is detected only by Roblox window input - typing in Discord or moving the mouse over other apps does not pause the timer."); }
                 if (i == 4) { title = TR(L"Skip Active"); text = TR(L"Skips the anti-AFK action in Roblox windows where you were recently active (keyboard input with that window focused, within the last action interval).\n\nUseful for multi-instance setups: play in one window and the anti-AFK action will be skipped in it, while it still runs in the idle windows. The window is skipped entirely - focus is not stolen and no action/reset/reconnect is sent to it.\n\nThe detection uses foreground window + keyboard input polling, so very brief key presses (faster than ~250 ms) may not be detected."); }
-                if (i == 5) { title = TR(L"Fish/Void/Bloxstrap Integration"); text = TR(L"Runs and auto-starts AntiAFK-RBX when Roblox is launched through Fishstrap, Voidstrap, or Bloxstrap.\n\nAntiAFK-RBX uses a CustomIntegrations feature for this function."); }
-                if (i == 6) { title = TR(L"Restore Window"); text = TR(L"How AntiAFK-RBX returns focus to the Roblox window after each action.\n\n- SetForeground (recommended): standard focus restore.\n- Alt+Tab (Legacy): single Alt+Tab. May not bring back the right window in multi-instance setups.\n- Smart Alt+Tab: tabs through ALL detected Roblox windows before releasing Alt. Best for multi-instance.\n- Off: leaves focus unchanged - Roblox may stay in the background."); }
+                if (i == 5) { title = TR(L"Fish/Void/Bloxstrap Integration"); text = TR(L"Runs and auto-starts No AFK when Roblox is launched through Fishstrap, Voidstrap, or Bloxstrap.\n\nNo AFK uses a CustomIntegrations feature for this function."); }
+                if (i == 6) { title = TR(L"Restore Window"); text = TR(L"How No AFK returns focus to the Roblox window after each action.\n\n- SetForeground (recommended): standard focus restore.\n- Alt+Tab (Legacy): single Alt+Tab. May not bring back the right window in multi-instance setups.\n- Smart Alt+Tab: tabs through ALL detected Roblox windows before releasing Alt. Best for multi-instance.\n- Off: leaves focus unchanged - Roblox may stay in the background."); }
                 if (i == 7) { title = TR(L"Screen Saver"); text = TR(L"Black full-screen overlay with a slow DVD-style bouncing text :) animation on all monitors.\n\nUseful as a quick privacy/break screen. Move the mouse or press any key to reveal the exit hint. Press Escape / Win to close, or click the X in the top-right corner. It passes all clicks (except escape/win) through itself, so it does not interfere with the Anti-AFK function."); }
             } else if (pData->currentPage == 3) { // Advanced
                 if (i == 0) { title = TR(L"User Interface"); text = TR(L"Interface preferences that don't affect Anti-AFK behaviour.\n\n- Disable Splash-Screen: skip the startup loading window.\n- Disable Acrylic Blur: solid window background instead of the acrylic blur effect (applied immediately).\n- Disable UI Animations: all interface transitions become instant.\n- Disable Tray Notifications: no balloon tips near the tray icon.\n- Keep Window On Top: keep the main window above all other windows.\n- Disable Rounded Corners: square window corners instead of the rounded Windows 11 style."); }
                 if (i == 1) { title = TR(L"Status Bar*"); text = TR(L"Experimental: shows a small on-screen overlay for important Anti-AFK events (start, stop, reconnect, errors).\n\nDisable for tray-only notifications if you want a quieter experience or are recording/streaming and don't want the overlay in captures.\n\nClick the gear icon to open Status Bar settings and choose what it shows:\n- Elements: app icon and program name (event text is always shown).\n- Events: Start & Stop, Actions, Auto-Reconnect, Macros and interface feedback - turn off what you don't need."); }
                 if (i == 2) { title = TR(L"Custom Process Search"); text = TR(L"Targets custom processes/windows instead of Roblox for Anti-AFK actions.\n\nClick the gear icon to specify executable file names or window title substrings separated by semicolons (;).\n\nWhen active, all actions (move, click, mute, opacity, FPS cap) redirect to these targets. Full functionality on custom processes/windows is not guaranteed."); }
                 if (i == 3) { title = TR(L"User-Safe Mode"); text = TR(L"Pauses Anti-AFK actions when user input (your input) is detected, so they don't interrupt active gameplay.\n\n- Off: no detection, actions always run on schedule.\n- Legacy: pauses on held keys/mouse buttons.\n- Beta: pauses on all input including mouse movement (Recommended)."); }
-                if (i == 4) { title = TR(L"Action Delays & Repeats"); text = TR(L"Customize Anti-AFK speed timings.\n\nClick 'edit' to set pre-action delays (wait before acting), key holds (how long a key is pressed), post-action delays (wait after), and sequential repetition counts. Use 'Default' for safe values or 'Safe' for slower, less noticeable actions. After making the changes, be sure to check that it works. If it works more than 99% of the time and the timings are lower than 'Default', you can share them on Discord to improve AntiAFK-RBX :)."); }
+                if (i == 4) { title = TR(L"Action Delays & Repeats"); text = TR(L"Customize Anti-AFK speed timings.\n\nClick 'edit' to set pre-action delays (wait before acting), key holds (how long a key is pressed), post-action delays (wait after), and sequential repetition counts. Use 'Default' for safe values or 'Safe' for slower, less noticeable actions. After making the changes, be sure to check that it works. If it works more than 99% of the time and the timings are lower than 'Default', you can share them on Discord to improve No AFK :)."); }
                 if (i == 5) { title = TR(L"Hotkey"); text = TR(L"Global hotkey to toggle Anti-AFK Start/Stop from anywhere.\n\nEnable the toggle and click the pencil icon to record a new key combination. Single keys (F1, Space, etc.) and multi-modifier combos (Ctrl+Shift+F1, Ctrl+Alt+X) are supported."); }
                 if (i == 6) { title = kLanguageSettingTitle; text = TR(L"Switches the interface language between English and Russian. The change applies instantly.\n\nRussian translation by x0doit."); }
             } else if (pData->currentPage == 5) { // Discord
@@ -20278,8 +20284,8 @@ title = TR(L"CPU Limit %");
                 if (i == 6) { title = TR(L"Interval Macros"); text = TR(L"Notifies Discord when interval macro mode is enabled or disabled (manually, or automatically with Anti-AFK start/stop)."); }
                 if (i == 7) { title = TR(L"Disable embed"); text = TR(L"Sends webhook messages as plain text instead of rich embeds.\n\nUse for simple log channels, mobile previews, or destinations where embeds are filtered or look too large."); }
                 if (i == 8) { title = TR(L"Mention on errors"); text = TR(L"Adds an @everyone (or whatever you add) mention for Error and Reconnect events. You can change @everyone to anything you want via the Configure mention target button to the right of the toggle."); }
-                if (i == 9) { title = TR(L"Default name"); text = TR(L"Omits the app username from webhook messages, so Discord shows the webhook's own name configured in Discord.\n\nOff: messages are posted as AntiAFK-RBX."); }
-                if (i == 10) { title = TR(L"Default avatar"); text = TR(L"Omits the app avatar from webhook messages, so Discord shows the webhook's own avatar configured in Discord.\n\nOff: messages use the AntiAFK-RBX icon."); }
+                if (i == 9) { title = TR(L"Default name"); text = TR(L"Omits the app username from webhook messages, so Discord shows the webhook's own name configured in Discord.\n\nOff: messages are posted as No AFK."); }
+                if (i == 10) { title = TR(L"Default avatar"); text = TR(L"Omits the app avatar from webhook messages, so Discord shows the webhook's own avatar configured in Discord.\n\nOff: messages use the No AFK icon."); }
                 if (i == 11) { title = TR(L"Timestamp"); text = TR(L"Adds a Discord timestamp (UTC) to embed messages, shown next to the event.\n\nOff: messages have no timestamp."); }
                 if (i == 12) { title = TR(L"Heartbeat"); text = TR(L"Sends a periodic status ping while Anti-AFK is running: session time, next action countdown and statistics.\n\nUseful to monitor that the app is alive. Set the interval with the clock button (5 to 1440 minutes). The first ping is sent after one full interval."); }
                 if (i == 13) { title = TR(L"RAM Cleaner"); text = TR(L"Notifies when the RAM Cleaner optimizes Roblox processes, including how many were cleaned."); }
@@ -20678,7 +20684,7 @@ title = TR(L"CPU Limit %");
     }
     if (pData->currentPage == 0 && PtInRect(&pData->discordButtonRect, pt)) {
         AnnouncementInfo announcement = GetAnnouncementCopy();
-        ShellExecute(NULL, L"open", announcement.enabled ? GetAnnouncementLink() : L"https://agzes.github.io/go/to/discord", NULL, NULL, SW_SHOWNORMAL);
+        ShellExecute(NULL, L"open", announcement.enabled ? GetAnnouncementLink() : L"https://discord.gg/ayame", NULL, NULL, SW_SHOWNORMAL);
         return;
     }
 
@@ -21258,55 +21264,55 @@ bool MainUI_Paint_DrawContent(HDC hdc, const RECT& clientRect, MainUIData* pData
 
         if (gridAnim > 0.0f) {
             SolidBrush textBrushGrid(Color((BYTE)(255 * gridAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(TR(L"AntiAFK-RBX • Grid Settings"), -1, &gdiFont, titleRect, &sf, &textBrushGrid);
+            g.DrawString(TR(L"No AFK • Grid Settings"), -1, &gdiFont, titleRect, &sf, &textBrushGrid);
         }
         if (settingsSubAnim > 0.0f) {
-            const wchar_t* settingsSubTitle = TR(L"AntiAFK-RBX • Settings");
-            if (pData->settingsSubKind == 1) settingsSubTitle = TR(L"AntiAFK-RBX • Multi-Instance Delay");
-            else if (pData->settingsSubKind == 2) settingsSubTitle = TR(L"AntiAFK-RBX • RAM Cleaner");
-            else if (pData->settingsSubKind == 3) settingsSubTitle = TR(L"AntiAFK-RBX • Reconnect Interval");
-            else if (pData->settingsSubKind == 4) settingsSubTitle = TR(L"AntiAFK-RBX • User Interface");
+            const wchar_t* settingsSubTitle = TR(L"No AFK • Settings");
+            if (pData->settingsSubKind == 1) settingsSubTitle = TR(L"No AFK • Multi-Instance Delay");
+            else if (pData->settingsSubKind == 2) settingsSubTitle = TR(L"No AFK • RAM Cleaner");
+            else if (pData->settingsSubKind == 3) settingsSubTitle = TR(L"No AFK • Reconnect Interval");
+            else if (pData->settingsSubKind == 4) settingsSubTitle = TR(L"No AFK • User Interface");
             SolidBrush textBrushSub(Color((BYTE)(255 * settingsSubAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
             g.DrawString(settingsSubTitle, -1, &gdiFont, titleRect, &sf, &textBrushSub);
         }
         if (statusBarSettingsAnim > 0.0f) {
             SolidBrush textBrushSb(Color((BYTE)(255 * statusBarSettingsAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(TR(L"AntiAFK-RBX • Status Bar Settings"), -1, &gdiFont, titleRect, &sf, &textBrushSb);
+            g.DrawString(TR(L"No AFK • Status Bar Settings"), -1, &gdiFont, titleRect, &sf, &textBrushSb);
         }
         if (actionDelaysAnim > 0.0f) {
             SolidBrush textBrushDelays(Color((BYTE)(255 * actionDelaysAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(TR(L"AntiAFK-RBX • Action Delays & Repeats"), -1, &gdiFont, titleRect, &sf, &textBrushDelays);
+            g.DrawString(TR(L"No AFK • Action Delays & Repeats"), -1, &gdiFont, titleRect, &sf, &textBrushDelays);
         }
         if (fpsCapperSettingsAnim > 0.0f) {
             SolidBrush textBrushFps(Color((BYTE)(255 * fpsCapperSettingsAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(TR(L"AntiAFK-RBX • FPS Capper (CPU Limiter)"), -1, &gdiFont, titleRect, &sf, &textBrushFps);
+            g.DrawString(TR(L"No AFK • FPS Capper (CPU Limiter)"), -1, &gdiFont, titleRect, &sf, &textBrushFps);
         }
         if (alphaInfoAnim > 0.0f) {
             SolidBrush textBrushAlpha(Color((BYTE)(255 * alphaInfoAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
             wchar_t aboutTitle[64];
-            swprintf_s(aboutTitle, TR(L"AntiAFK-RBX • About • %ls"), GetReleaseChannelName());
+            swprintf_s(aboutTitle, TR(L"No AFK • About • %ls"), GetReleaseChannelName());
             g.DrawString(aboutTitle, -1, &gdiFont, titleRect, &sf, &textBrushAlpha);
         }
         if (timingsAnim > 0.0f) {
             SolidBrush textBrushTimings(Color((BYTE)(255 * timingsAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(TR(L"AntiAFK-RBX • Timings"), -1, &gdiFont, titleRect, &sf, &textBrushTimings);
+            g.DrawString(TR(L"No AFK • Timings"), -1, &gdiFont, titleRect, &sf, &textBrushTimings);
         }
         float macrosAnim = pData->macrosViewAnim;
         if (macrosAnim > 0.0f) {
             SolidBrush textBrushMacros(Color((BYTE)(255 * macrosAnim), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            const wchar_t* titleText = TR(L"AntiAFK-RBX • Macros");
-            if (pData->macrosViewMode == 1) titleText = TR(L"AntiAFK-RBX • New Macro: Name");
-            else if (pData->macrosViewMode == 2) titleText = g_macroReRecording ? TR(L"AntiAFK-RBX • Re-record Macro") : TR(L"AntiAFK-RBX • New Macro: Record");
-            else if (pData->macrosViewMode == 3) titleText = TR(L"AntiAFK-RBX • New Macro: Review");
-            else if (pData->macrosViewMode == 4) titleText = TR(L"AntiAFK-RBX • New Macro: Triggers");
-            else if (pData->macrosViewMode == 5) titleText = TR(L"AntiAFK-RBX • Recording...");
+            const wchar_t* titleText = TR(L"No AFK • Macros");
+            if (pData->macrosViewMode == 1) titleText = TR(L"No AFK • New Macro: Name");
+            else if (pData->macrosViewMode == 2) titleText = g_macroReRecording ? TR(L"No AFK • Re-record Macro") : TR(L"No AFK • New Macro: Record");
+            else if (pData->macrosViewMode == 3) titleText = TR(L"No AFK • New Macro: Review");
+            else if (pData->macrosViewMode == 4) titleText = TR(L"No AFK • New Macro: Triggers");
+            else if (pData->macrosViewMode == 5) titleText = TR(L"No AFK • Recording...");
             g.DrawString(titleText, -1, &gdiFont, titleRect, &sf, &textBrushMacros);
         }
         float badgeAnim = pData->badgeRevealAnim;
         float mainTitleFade = 1.0f - (std::max)((std::max)((std::max)((std::max)((std::max)((std::max)((std::max)((std::max)(gridAnim, statusBarSettingsAnim), actionDelaysAnim), fpsCapperSettingsAnim), alphaInfoAnim), timingsAnim), macrosAnim), badgeAnim), settingsSubAnim);
         if (mainTitleFade > 0.0f) {
             SolidBrush textBrushNormal(Color((BYTE)(255 * mainTitleFade), GetRValue(DARK_TEXT), GetGValue(DARK_TEXT), GetBValue(DARK_TEXT)));
-            g.DrawString(L"AntiAFK-RBX", -1, &gdiFont, titleRect, &sf, &textBrushNormal);
+            g.DrawString(L"No AFK", -1, &gdiFont, titleRect, &sf, &textBrushNormal);
         }
 
 
@@ -23876,8 +23882,8 @@ pData->resetSettingsButtonRect = { 0, clientRect.bottom - startBtnH - disclaimer
             if (!measureOnly) {
                 SolidBrush whiteBrush(Color(255, 255, 255, 255));
                 RectF titleBounds;
-                gTarget.MeasureString(L"AntiAFK-RBX", -1, &fontTitle, PointF(0, 0), &sfMeasure, &titleBounds);
-                gTarget.DrawString(L"AntiAFK-RBX", -1, &fontTitle, PointF((REAL)contentX, (REAL)fixedY), &sfMeasure, &whiteBrush);
+                gTarget.MeasureString(L"No AFK", -1, &fontTitle, PointF(0, 0), &sfMeasure, &titleBounds);
+                gTarget.DrawString(L"No AFK", -1, &fontTitle, PointF((REAL)contentX, (REAL)fixedY), &sfMeasure, &whiteBrush);
 
                 const wchar_t* badgeText = TR(L"PREVIEW");
                 RectF badgeBounds;
@@ -23938,7 +23944,7 @@ pData->resetSettingsButtonRect = { 0, clientRect.bottom - startBtnH - disclaimer
                 contentY += 4 + extraGap;
             }
 
-            drawSection(TR(L"Reporting Issues"), TR(L"Found a bug? Report it on GitHub or Discord with details and steps to reproduce. (links below)"), Color(255, 120, 190, 255));
+            drawSection(TR(L"Reporting Issues"), TR(L"Found a bug? Report it in our Discord with details and steps to reproduce. (link below)"), Color(255, 120, 190, 255));
 
             drawSection(TR(L"Stay Updated"), TR(L"Follow releases on GitHub to get the latest updates and fixes. Updates will also be displayed in the UI."), Color(255, 120, 190, 255));
 
@@ -25707,7 +25713,7 @@ LRESULT CALLBACK MainUIWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
     {
         std::wstring* msg = reinterpret_cast<std::wstring*>(wParam);
         if (msg) {
-            ShowDarkMessageBox(hwnd, msg->c_str(), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+            ShowDarkMessageBox(hwnd, msg->c_str(), TR(L"No AFK • Discord Webhook"), MB_OK);
             delete msg;
         }
         return 0;
@@ -25748,7 +25754,7 @@ LRESULT CALLBACK MainUIWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
             }
             if (!confirmMsg.empty()) {
                 EnableWindow(hwnd, FALSE);
-                int delResult = ShowDarkMessageBox(hwnd, confirmMsg.c_str(), TR(L"AntiAFK-RBX • Delete Macro"), MB_YESNO | MB_DEFBUTTON2);
+                int delResult = ShowDarkMessageBox(hwnd, confirmMsg.c_str(), TR(L"No AFK • Delete Macro"), MB_YESNO | MB_DEFBUTTON2);
                 EnableWindow(hwnd, TRUE);
                 SetForegroundWindow(hwnd);
             if (delResult == IDYES) {
@@ -27929,11 +27935,11 @@ void main_thread(bool arg_tray)
                     ApplyAutoUtilsStopEffects();
                     QueueDiscordWebhookEvent(DiscordWebhookEvent::Stopped, TR(L"Stopped: Roblox not found."), false);
                     QueueStatusBarOverlay(TR(L"Auto-stopped: Roblox not found"), 2200, user, StatusBarEventType::Session);
-                    QueueRefreshTrayMenu(false); UpdateTrayIcon(); ShowTrayNotification(TR(L"AntiAFK-RBX • Auto-Stopped"), TR(L"Roblox window not found. Anti-AFK is now off.")); continue;
+                    QueueRefreshTrayMenu(false); UpdateTrayIcon(); ShowTrayNotification(TR(L"No AFK • Auto-Stopped"), TR(L"Roblox window not found. Anti-AFK is now off.")); continue;
                 }
                 else
                 {
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                    ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                     QueueDiscordWebhookEvent(DiscordWebhookEvent::Error, TR(L"Roblox not found."), false);
                     QueueStatusBarOverlay(TR(L"Roblox window not found"), 2200, user, StatusBarEventType::Session);
                     FinalizeAfkSession();
@@ -27946,7 +27952,7 @@ void main_thread(bool arg_tray)
                     ApplyAutoUtilsStopEffects();
                     QueueRefreshTrayMenu(false);
                     UpdateTrayIcon();
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Auto-Stopped"), TR(L"Roblox window not found. Anti-AFK is now off."));
+                    ShowTrayNotification(TR(L"No AFK • Auto-Stopped"), TR(L"Roblox window not found. Anti-AFK is now off."));
                     continue;
                 }
             }
@@ -28280,7 +28286,7 @@ void main_thread(bool arg_tray)
                     if (!focusFailNotified && mostIdle >= (uint64_t)(ROBLOX_IDLE_KICK_TIME - 2 * 60))
                     {
                         focusFailNotified = true;
-                        ShowTrayNotification(TR(L"AntiAFK-RBX • Can't reach Roblox"),
+                        ShowTrayNotification(TR(L"No AFK • Can't reach Roblox"),
                             TR(L"Windows blocked switching to the Roblox window, so the anti-AFK action wasn't sent. Retrying shortly. To be safe, click the Roblox window."));
                     }
                 }
@@ -28620,7 +28626,7 @@ static void SetUiLanguage(int language)
     SaveUiLanguage(language);
     {
         std::lock_guard<std::mutex> trayLock(g_trayIconMutex);
-        StringCchCopyW(g_nid.szTip, _countof(g_nid.szTip), TR(L"AntiAFK-RBX • Click right mouse button for menu"));
+        StringCchCopyW(g_nid.szTip, _countof(g_nid.szTip), TR(L"No AFK • Click right mouse button for menu"));
         if (g_nid.hWnd)
         {
             NOTIFYICONDATA tipUpdate = {};
@@ -28659,7 +28665,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         g_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
         g_nid.uCallbackMessage = WM_USER + 1;
         g_nid.hIcon = CreateCustomIcon();
-        lstrcpy(g_nid.szTip, TR(L"AntiAFK-RBX • Click right mouse button for menu"));
+        lstrcpy(g_nid.szTip, TR(L"No AFK • Click right mouse button for menu"));
         Shell_NotifyIcon(NIM_ADD, &g_nid);
         CreateTrayMenu(g_isAfkStarted.load());
         SetWindowLong(hwnd, GWL_EXSTYLE, GetWindowLong(hwnd, GWL_EXSTYLE) | WS_EX_TOOLWINDOW);
@@ -28708,7 +28714,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         break;
     case WM_APP + 12:
         {
-            int result = ShowDarkMessageBox(hwnd, TR(L"Are you sure you want to reset all statistics?\nThis action cannot be undone."), TR(L"AntiAFK-RBX • Reset Statistics"), MB_YESNO | MB_DEFBUTTON2);
+            int result = ShowDarkMessageBox(hwnd, TR(L"Are you sure you want to reset all statistics?\nThis action cannot be undone."), TR(L"No AFK • Reset Statistics"), MB_YESNO | MB_DEFBUTTON2);
             if (result == IDYES) {
                 ResetStatisticsCounters();
                 if (g_hMainUiWnd && IsWindow(g_hMainUiWnd)) {
@@ -28833,7 +28839,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
         std::wstring* msg = reinterpret_cast<std::wstring*>(wParam);
         if (msg) {
-            ShowDarkMessageBox(hwnd, msg->c_str(), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+            ShowDarkMessageBox(hwnd, msg->c_str(), TR(L"No AFK • Discord Webhook"), MB_OK);
             delete msg;
         }
         return 0;
@@ -28884,7 +28890,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case ID_LINKGITHUB:
         {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             break;
         }
         case ID_UPDATE_AVAILABLE:
@@ -28899,7 +28905,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case ID_LINKSF:
         {
-            ShellExecute(NULL, L"open", L"https://sourceforge.net/projects/antiafk-rbx/", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", L"https://discord.gg/ayame", NULL, NULL, SW_SHOWNORMAL);
             break;
         }
         case ID_START_AFK:
@@ -28911,7 +28917,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 if (!g_isAfkStarted.load() && g_selectedAction.load() == 4 && MacroEngine_GetCooldownMacros().empty() && !MacroEngine_AllWindowsHaveInstanceMacros()) {
                     HWND owner = g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd;
                     EnableWindow(owner, FALSE);
-                    int res = ShowDarkMessageBox(owner, TR(L"'Macros Only' is selected, but no AFK action macros are enabled.\n\nWithout AFK action macros Anti-AFK will NOT work correctly - nothing will be performed.\n\nStart anyway?\n\nTip: change the action to something else, or add at least 1 macro with the AFK action trigger."), TR(L"AntiAFK-RBX • Macros Only"), MB_YESNO | MB_DEFBUTTON2);
+                    int res = ShowDarkMessageBox(owner, TR(L"'Macros Only' is selected, but no AFK action macros are enabled.\n\nWithout AFK action macros Anti-AFK will NOT work correctly - nothing will be performed.\n\nStart anyway?\n\nTip: change the action to something else, or add at least 1 macro with the AFK action trigger."), TR(L"No AFK • Macros Only"), MB_YESNO | MB_DEFBUTTON2);
                     EnableWindow(owner, TRUE);
                     SetForegroundWindow(owner);
                     if (res != IDYES) {
@@ -28962,7 +28968,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
              }
              else
              {
-                 ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                 ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                  ShowStatusBarOverlay(TR(L"Roblox window not found"), 2200, GetForegroundWindow());
                  QueueDiscordWebhookEvent(DiscordWebhookEvent::Error, TR(L"Start failed: Roblox not found."), false);
                  if (g_hMainUiWnd && IsWindow(g_hMainUiWnd)) {
@@ -29023,7 +29029,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             auto wins = FindAllRobloxWindows(true);
             if (wins.empty())
             {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                 ShowStatusBarOverlay(TR(L"Roblox window not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
             }
             else
@@ -29038,7 +29044,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             auto wins = FindAllRobloxWindows(true);
             if (wins.empty())
             {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                 ShowStatusBarOverlay(TR(L"Roblox window not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
             }
             else
@@ -29084,7 +29090,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             auto wins = FindAllRobloxWindows(true);
             if (wins.empty())
             {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                 ShowStatusBarOverlay(TR(L"Roblox window not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
             }
             else
@@ -29153,7 +29159,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(g_hMainUiWnd);
             }
                             if (g_useLegacyUi.load()) {
-                                ShowTrayNotification(TR(L"AntiAFK-RBX • UI Mode Changed"), TR(L"Switched to Legacy (Tray) mode."));
+                                ShowTrayNotification(TR(L"No AFK • UI Mode Changed"), TR(L"Switched to Legacy (Tray) mode."));
                             }
             break;
         case ID_TOGGLE_SIMPLE_MODE:
@@ -29583,7 +29589,7 @@ case ID_AUTO_RESET:
             {
                 int result = ShowDarkMessageBox(hwnd,
                     TR(L"Warning: Custom Process Search redirects Anti-AFK clicks, key simulations, FPS cap, and auto-mute actions to your custom-defined processes and windows instead of Roblox.\n\nAre you sure you want to enable this?"),
-                    TR(L"AntiAFK-RBX • Enable Custom Process Search"),
+                    TR(L"No AFK • Enable Custom Process Search"),
                     MB_YESNO | MB_DEFBUTTON2);
                 if (result != IDYES)
                 {
@@ -29644,8 +29650,8 @@ case ID_AUTO_RESET:
         {
             int result = ShowDarkMessageBox(
                 g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd,
-                TR(L"Close all detected Roblox clients?\n\nAntiAFK-RBX will first ask windows to close, then force-close any remaining Roblox processes."),
-                TR(L"AntiAFK-RBX • Close All Roblox"),
+                TR(L"Close all detected Roblox clients?\n\nNo AFK will first ask windows to close, then force-close any remaining Roblox processes."),
+                TR(L"No AFK • Close All Roblox"),
                 MB_YESNO | MB_DEFBUTTON2);
 
             if (result == IDYES)
@@ -29675,7 +29681,7 @@ case ID_AUTO_RESET:
                 ShowStatusBarOverlay(TR(L"Reset sent to all Roblox windows"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
                 QueueDiscordWebhookEvent(DiscordWebhookEvent::AutoReset, TR(L"Manual reset sent to all Roblox windows."), false);
             } else {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                 ShowStatusBarOverlay(TR(L"Roblox window not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
             }
             break;
@@ -29683,7 +29689,7 @@ case ID_AUTO_RESET:
         case ID_UTILS_TEST_ACTION: case ID_TEST_ACTION:
         {
             if (!g_isAfkStarted.load()) {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Info"), TR(L"Start Anti-AFK first to test the action."));
+                ShowTrayNotification(TR(L"No AFK • Info"), TR(L"Start Anti-AFK first to test the action."));
                 ShowStatusBarOverlay(TR(L"Start AFK first to test"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
             } else {
                 g_randomCyclePick = -1;
@@ -29691,7 +29697,7 @@ case ID_AUTO_RESET:
                     g_lastAfkActionTimestamp = GetTickCount64();
                     ShowStatusBarOverlay(TR(L"Test Anti-AFK action sent"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
                 } else {
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox window not found!"));
+                    ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox window not found!"));
                     ShowStatusBarOverlay(TR(L"Roblox window not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
                 }
             }
@@ -29701,7 +29707,7 @@ case ID_AUTO_RESET:
         {
             auto pids = FindAllRobloxProcessIds();
             if (pids.empty()) {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Roblox process not found!"));
+                ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Roblox process not found!"));
                 ShowStatusBarOverlay(TR(L"Roblox process not found"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : GetForegroundWindow());
                 break;
             }
@@ -29743,7 +29749,7 @@ case ID_AUTO_RESET:
             int result = ShowDarkMessageBox(
                 g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd,
                 TR(L"Are you sure you want to reset all statistics?\nThis action cannot be undone."),
-                TR(L"AntiAFK-RBX • Reset Statistics"),
+                TR(L"No AFK • Reset Statistics"),
                 MB_YESNO | MB_DEFBUTTON2);
 
             if (result == IDYES)
@@ -29860,7 +29866,7 @@ case ID_AUTO_RESET:
             std::wstring clipboardText;
             if (!ReadUnicodeTextFromClipboard(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, clipboardText))
             {
-                ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, TR(L"Clipboard does not contain Unicode text right now."), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+                ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, TR(L"Clipboard does not contain Unicode text right now."), TR(L"No AFK • Discord Webhook"), MB_OK);
                 ShowStatusBarOverlay(TR(L"Clipboard text not available"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
                 break;
             }
@@ -29965,7 +29971,7 @@ case ID_AUTO_RESET:
                     (unsigned long long)g_autoReconnectsPerformed.load(),
                     (unsigned long long)g_afkSessionsCompleted.load());
             }
-            ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, timingsBuf, TR(L"AntiAFK-RBX • Current Timings"), MB_OK);
+            ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, timingsBuf, TR(L"No AFK • Current Timings"), MB_OK);
             break;
         }
         case ID_RETRY_MULTI_INSTANCE:
@@ -29973,7 +29979,7 @@ case ID_AUTO_RESET:
             MutexCreateResult result = EnableMultiInstanceSupport();
             if (result == MUTEX_CREATED || result == MUTEX_ALREADY_EXISTS) {
                 ClearMutexBanner();
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Multi-Instance"), TR(L"Multi-Instance mutex acquired. Bypass is active."));
+                ShowTrayNotification(TR(L"No AFK • Multi-Instance"), TR(L"Multi-Instance mutex acquired. Bypass is active."));
             } else {
                 ShowMutexErrorDialog(hwnd);
             }
@@ -29986,7 +29992,7 @@ case ID_AUTO_RESET:
             std::wstring webhookUrl = GetDiscordWebhookUrlCopy();
             if (!IsDiscordWebhookUrl(webhookUrl))
             {
-                ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, TR(L"Enter a valid Discord webhook URL first."), TR(L"AntiAFK-RBX • Discord Webhook"), MB_OK);
+                ShowDarkMessageBox(g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd, TR(L"Enter a valid Discord webhook URL first."), TR(L"No AFK • Discord Webhook"), MB_OK);
                 ShowStatusBarOverlay(TR(L"Webhook URL is invalid"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
                 break;
             }
@@ -30263,7 +30269,7 @@ case ID_AUTO_RESET:
             break;
         case ID_RESET_SETTINGS:
         {
-            int result = ShowDarkMessageBox(hwnd, TR(L"Are you sure you want to reset all settings to their defaults?\nThis action cannot be undone."), TR(L"AntiAFK-RBX • Reset Settings"), MB_YESNO | MB_DEFBUTTON2);
+            int result = ShowDarkMessageBox(hwnd, TR(L"Are you sure you want to reset all settings to their defaults?\nThis action cannot be undone."), TR(L"No AFK • Reset Settings"), MB_YESNO | MB_DEFBUTTON2);
             if (result == IDYES)
             {
                 ResetSettings();
@@ -30290,7 +30296,7 @@ case ID_AUTO_RESET:
                 ShowStatusBarOverlay(TR(L"Settings imported"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
             }
             else {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Import Failed"), TR(L"Could not load settings from the selected file."));
+                ShowTrayNotification(TR(L"No AFK • Import Failed"), TR(L"Could not load settings from the selected file."));
                 ShowStatusBarOverlay(TR(L"Settings import failed"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
             }
             break;
@@ -30301,7 +30307,7 @@ case ID_AUTO_RESET:
                 ShowStatusBarOverlay(TR(L"Settings exported"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
             }
             else {
-                ShowTrayNotification(TR(L"AntiAFK-RBX • Export Failed"), TR(L"Could not save settings to the selected file."));
+                ShowTrayNotification(TR(L"No AFK • Export Failed"), TR(L"Could not save settings to the selected file."));
                 ShowStatusBarOverlay(TR(L"Settings export failed"), 1800, g_hMainUiWnd && IsWindow(g_hMainUiWnd) ? g_hMainUiWnd : hwnd);
             }
             break;
@@ -30361,7 +30367,7 @@ case ID_AUTO_RESET:
         case ID_ACTION_RANDOM:
         case ID_MACROS_SELECT:
             if (LOWORD(wParam) == ID_MACROS_SELECT && g_selectedAction.load() != 4) {
-                int confirm = ShowDarkMessageBox(hwnd, TR(L"Enable 'Macros Only' as the AFK action?\n\nNo key actions (W/S, Space, Zoom) will be performed. Only macros with the 'AFK cooldown' trigger will run, once per AFK cycle."), TR(L"AntiAFK-RBX • Macros Only"), MB_YESNO | MB_DEFBUTTON2);
+                int confirm = ShowDarkMessageBox(hwnd, TR(L"Enable 'Macros Only' as the AFK action?\n\nNo key actions (W/S, Space, Zoom) will be performed. Only macros with the 'AFK cooldown' trigger will run, once per AFK cycle."), TR(L"No AFK • Macros Only"), MB_YESNO | MB_DEFBUTTON2);
                 if (confirm != IDYES) {
                     break;
                 }
@@ -31012,7 +31018,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             }
             if (!terminated) {
                 if (hSingleInstanceMutex) { CloseHandle(hSingleInstanceMutex); hSingleInstanceMutex = NULL; }
-                ShowDarkMessageBox(NULL, TR(L"AntiAFK-RBX is already running and could not be restarted.\nCheck the system tray or run this command as the same user."), L"AntiAFK-RBX", MB_OK);
+                ShowDarkMessageBox(NULL, TR(L"No AFK is already running and could not be restarted.\nCheck the system tray or run this command as the same user."), L"No AFK", MB_OK);
                 GdiplusShutdown(gdiplusToken);
                 return 0;
             }
@@ -31028,9 +31034,9 @@ if (hExistingWnd) {
 PostMessage(hExistingWnd, WM_COMMAND, ID_OPEN_UI, 0);
 }
 if (arg_force && !hExistingWnd) {
-ShowDarkMessageBox(NULL, TR(L"AntiAFK-RBX is already running, but its window could not be located, so it could not be restarted.\nClose the other instance from the system tray and try again."), L"AntiAFK-RBX", MB_OK);
+ShowDarkMessageBox(NULL, TR(L"No AFK is already running, but its window could not be located, so it could not be restarted.\nClose the other instance from the system tray and try again."), L"No AFK", MB_OK);
 } else {
-ShowDarkMessageBox(NULL, TR(L"AntiAFK-RBX is already running.\nCheck the system tray or use --force to restart."), L"AntiAFK-RBX", MB_OK);
+ShowDarkMessageBox(NULL, TR(L"No AFK is already running.\nCheck the system tray or use --force to restart."), L"No AFK", MB_OK);
 }
 GdiplusShutdown(gdiplusToken);
 return 0;
@@ -31045,10 +31051,10 @@ ApplyAutoRobloxWindowLayout();
 }
 
     if (arg_resetSettingsAndExit) {
-        int result = ShowDarkMessageBox(NULL, TR(L"Are you sure you want to reset all settings to their defaults via command line?\nThis action cannot be undone."), TR(L"AntiAFK-RBX • Reset Settings"), MB_YESNO | MB_DEFBUTTON2);
+        int result = ShowDarkMessageBox(NULL, TR(L"Are you sure you want to reset all settings to their defaults via command line?\nThis action cannot be undone."), TR(L"No AFK • Reset Settings"), MB_YESNO | MB_DEFBUTTON2);
         if (result == IDYES) {
             ResetSettings();
-            ShowDarkMessageBox(NULL, TR(L"All settings have been restored to their defaults."), TR(L"AntiAFK-RBX • Settings Reset"), MB_OK);
+            ShowDarkMessageBox(NULL, TR(L"All settings have been restored to their defaults."), TR(L"No AFK • Settings Reset"), MB_OK);
         }
         GdiplusShutdown(gdiplusToken);
         return 0;
@@ -31057,7 +31063,7 @@ ApplyAutoRobloxWindowLayout();
     if (arg_checkUpdatesAndExit) {
         SaveSettings();
         CheckForUpdates(false);
-        ShowDarkMessageBox(NULL, g_updateFound ? TR(L"A new version is available.") : (g_updateCheckFailed.load() ? TR(L"Failed to check for updates.") : TR(L"You are using the latest version.")), TR(L"AntiAFK-RBX • Update Check"), MB_OK);
+        ShowDarkMessageBox(NULL, g_updateFound ? TR(L"A new version is available.") : (g_updateCheckFailed.load() ? TR(L"Failed to check for updates.") : TR(L"You are using the latest version.")), TR(L"No AFK • Update Check"), MB_OK);
         GdiplusShutdown(gdiplusToken);
         return 0;
     }
@@ -31078,11 +31084,11 @@ ApplyAutoRobloxWindowLayout();
     }
 
     RegisterClass(&wc);
-    g_hwnd = CreateWindowEx(0, CLASS_NAME, L"AntiAFK-RBX", WS_OVERLAPPEDWINDOW,
+    g_hwnd = CreateWindowEx(0, CLASS_NAME, L"No AFK", WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, NULL, NULL, hInstance, NULL);
 
     if (g_useLegacyUi.load() && !arg_tray && !noSplash && g_firstWelcomeShown.load()) {
-        ShowTrayNotification(TR(L"AntiAFK-RBX • Legacy Mode"), TR(L"AntiAFK-RBX is running in legacy mode. Right-click the tray icon to configure."));
+        ShowTrayNotification(TR(L"No AFK • Legacy Mode"), TR(L"No AFK is running in legacy mode. Right-click the tray icon to configure."));
     }
 
     if (g_multiSupport.load())
@@ -31107,7 +31113,7 @@ ApplyAutoRobloxWindowLayout();
         }
         if (!IsMultiInstanceMutexValid())
         {
-            ShowTrayNotification(TR(L"AntiAFK-RBX • Error"), TR(L"Failed to create Multi-Instance mutex!"));
+            ShowTrayNotification(TR(L"No AFK • Error"), TR(L"Failed to create Multi-Instance mutex!"));
             ShowStatusBarOverlay(TR(L"Mutex creation failed. Close all Roblox windows and retry."), 5000, g_hwnd);
             ShowMutexBanner(TR(L"Mutex registration failed"), TR(L"Could not register the singleton mutex"), false);
         }

@@ -22,14 +22,14 @@ BEGIN
 		BEGIN
 		BLOCK "040904e4"
 		BEGIN
-			VALUE "CompanyName", "Agzes"
-			VALUE "FileDescription", "AntiAFK-RBX • Roblox AntiAFK Utility"
-			VALUE "FileVersion", "4.0.0-beta3"
-			VALUE "InternalName", "AntiAFK-RBX.exe"
-			VALUE "LegalCopyright", "© Agzes"
-			VALUE "OriginalFilename", "AntiAFK-RBX.exe"
-			VALUE "ProductName", "AntiAFK-RBX"
-			VALUE "ProductVersion", "4.0.0-beta3"
+			VALUE "CompanyName", "x0doit"
+			VALUE "FileDescription", "No AFK for Roblox"
+			VALUE "FileVersion", "4.0.0-beta3-ru.4"
+			VALUE "InternalName", "NoAFK.exe"
+			VALUE "LegalCopyright", "© 2024-2026 Agzes, © 2026 x0doit (MIT License)"
+			VALUE "OriginalFilename", "NoAFK.exe"
+			VALUE "ProductName", "No AFK for Roblox"
+			VALUE "ProductVersion", "4.0.0-beta3-ru.4"
 		END
 	END
 	BLOCK "VarFileInfo"

@@ -1,8 +1,8 @@
 {
-    "enabled": true,
-    "notify": false,
-    "icon": "\uEB51",
-    "iconColor": "#b91d16",
-    "title": "Support AntiAFK-RBX development!",
-    "description": ""
+	"enabled": false,
+	"notify": false,
+	"icon": "",
+	"iconColor": "#2B4ECC",
+	"title": "",
+	"description": ""
 }
