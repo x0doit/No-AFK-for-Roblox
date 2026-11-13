@@ -7,7 +7,14 @@
 #define STABLE  4
 #define MAKE_VERSION(major, minor, patch, type, num) ((major)*10000000 + (minor)*100000 + (patch)*1000 + (type)*100 + (num))
 int currentVersion = MAKE_VERSION(4, 0, 0, BETA, 3);
-const wchar_t* g_Version = L"v.4.0.0-beta3";
+const wchar_t* g_Version = L"v.4.0.0-beta3-ru.3";
+
+// Updates come from this fork's GitHub releases, tagged v.<upstream version>-ru.<FORK_BUILD>
+// (for example v.4.0.0-beta.3-ru.3). Bump FORK_BUILD and the -ru.N part of g_Version together.
+const int FORK_BUILD = 3;
+#define FORK_RELEASES_URL L"https://github.com/x0doit/AntiAFK-RBX/releases"
+#define FORK_LATEST_RELEASE_URL L"https://github.com/x0doit/AntiAFK-RBX/releases/latest"
+#define FORK_LATEST_RELEASE_API L"https://api.github.com/repos/x0doit/AntiAFK-RBX/releases/latest"
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -53,10 +60,7 @@ const wchar_t* g_Version = L"v.4.0.0-beta3";
 
 static const wchar_t* GetVersionCheckUrl()
 {
-    int releaseType = (currentVersion / 100) % 10;
-    if (releaseType == ALPHA || releaseType == BETA || releaseType == RC)
-        return L"https://raw.githubusercontent.com/Agzes/AntiAFK-RBX/refs/heads/preview/version.preview";
-    return L"https://raw.githubusercontent.com/Agzes/AntiAFK-RBX/refs/heads/main/version";
+    return FORK_LATEST_RELEASE_API;
 }
 
 static const wchar_t* GetReleaseChannelName()
@@ -382,6 +386,8 @@ std::atomic<bool> g_hotkeyCaptureIsGrid(false);
 HWND g_hotkeyCaptureWnd = NULL;
 HHOOK g_hHotkeyHook = NULL;
 std::atomic<int> g_updateServerVersion(0);
+std::mutex g_updateServerTagMutex;
+std::wstring g_updateServerTag; // release tag of the newer build found by CheckForUpdates
 std::atomic<int> g_gridMode(0); // 0 - auto, 1 - fixedSize, 2 - fixedLines, 3 - fixedRows, 4 - fixedWidth, 5 - fixedHeight
 std::atomic<bool> g_ramCleanerEnabled(false);
 std::atomic<bool> g_ramCleanerAutoStart(false);
@@ -2376,7 +2382,7 @@ LRESULT CALLBACK AboutWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         if (PtInRect(&pData->updateButtonRect, pt))
         {
             if (pData->updateCheckState == 2) {
-                ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+                ShellExecute(NULL, L"open", FORK_LATEST_RELEASE_URL, NULL, NULL, SW_SHOWNORMAL);
             } else if (pData->updateCheckState != 1) {
                 pData->updateCheckState = 1;
                 pData->updateButtonText = TR(L"Checking...");
@@ -14145,75 +14151,99 @@ static bool TryReAddTrayIcon(HWND hwnd)
 }
 // ==========
 
+// Parses a fork release tag: v.<major>.<minor>.<patch>[-alpha|-beta|-rc.<n>][-ru[.<build>]].
+// "-ru" without a number is fork build 0; a tag without "-ru" is fork build 0 as well.
+static bool ParseForkReleaseTag(const std::wstring& tag, int& baseVersion, int& forkBuild)
+{
+    size_t p = 0;
+    auto readNumber = [&](int& out) -> bool {
+        if (p >= tag.size() || !iswdigit(tag[p])) return false;
+        long long v = 0;
+        while (p < tag.size() && iswdigit(tag[p]) && v < 1000000) v = v * 10 + (tag[p++] - L'0');
+        out = (int)v;
+        return true;
+    };
+    if (p < tag.size() && (tag[p] == L'v' || tag[p] == L'V')) p++;
+    if (p < tag.size() && tag[p] == L'.') p++;
+
+    int major = 0, minor = 0, patch = 0;
+    if (!readNumber(major) || p >= tag.size() || tag[p++] != L'.') return false;
+    if (!readNumber(minor) || p >= tag.size() || tag[p++] != L'.') return false;
+    if (!readNumber(patch)) return false;
+
+    int type = STABLE, num = 0;
+    forkBuild = 0;
+    while (p < tag.size()) {
+        if (tag[p++] != L'-') return false;
+        auto takeWord = [&](const wchar_t* word) -> bool {
+            size_t n = wcslen(word);
+            if (tag.compare(p, n, word) != 0) return false;
+            p += n;
+            return true;
+        };
+        int value = 0;
+        if (takeWord(L"alpha")) type = ALPHA;
+        else if (takeWord(L"beta")) type = BETA;
+        else if (takeWord(L"rc")) type = RC;
+        else if (takeWord(L"ru")) {
+            if (p < tag.size() && tag[p] == L'.') p++;
+            if (readNumber(value)) forkBuild = value;
+            continue;
+        }
+        else return false;
+        if (p < tag.size() && tag[p] == L'.') p++;
+        if (!readNumber(value)) return false;
+        num = value;
+    }
+    if (minor > 99 || patch > 99 || num > 99) return false;
+    baseVersion = MAKE_VERSION(major, minor, patch, type, type == STABLE ? 0 : num);
+    return true;
+}
+
+std::wstring GetUpdateServerTag()
+{
+    std::lock_guard<std::mutex> lock(g_updateServerTagMutex);
+    return g_updateServerTag;
+}
+
+// Checks the latest release of this fork (see FORK_LATEST_RELEASE_API) and compares its
+// tag with currentVersion and FORK_BUILD.
 bool CheckForUpdates(bool showNotification = true)
 {
     bool updateFound = false;
-    DWORD timeoutMs = 5000;
     g_updateFound = false;
     g_updateCheckFailed = false;
     g_updateServerVersion = 0;
-    HINTERNET hInternet = InternetOpen(L"AntiAFK-RBX/4.0", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);
-    if (!hInternet) {
-        g_updateCheckFailed = true;
-        return false;
-    }
-
-    InternetSetOption(hInternet, INTERNET_OPTION_CONNECT_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-    InternetSetOption(hInternet, INTERNET_OPTION_SEND_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-    InternetSetOption(hInternet, INTERNET_OPTION_RECEIVE_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-
-    HINTERNET hConnect = InternetOpenUrl(hInternet, GetVersionCheckUrl(), NULL, 0, INTERNET_FLAG_RELOAD | INTERNET_FLAG_SECURE | INTERNET_FLAG_NO_UI, 0);
-    if (!hConnect) {
-        g_updateCheckFailed = true;
-        InternetCloseHandle(hInternet);
-        return false;
-    }
-
-    InternetSetOption(hConnect, INTERNET_OPTION_CONNECT_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-    InternetSetOption(hConnect, INTERNET_OPTION_SEND_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-    InternetSetOption(hConnect, INTERNET_OPTION_RECEIVE_TIMEOUT, &timeoutMs, sizeof(timeoutMs));
-
-    char buffer[256] = { 0 };
-    DWORD bytesRead = 0;
-    std::string versionData;
-    while (InternetReadFile(hConnect, buffer, sizeof(buffer) - 1, &bytesRead) && bytesRead > 0)
     {
-        versionData.append(buffer, bytesRead);
-        bytesRead = 0;
-        if (versionData.size() >= 64) break;
+        std::lock_guard<std::mutex> lock(g_updateServerTagMutex);
+        g_updateServerTag.clear();
     }
-    if (!versionData.empty())
-    {
-        try {
-            int serverVersion = std::stoi(versionData);
-            if (serverVersion > currentVersion) {
-                updateFound = true;
-                g_updateFound = true;
-                g_updateServerVersion = serverVersion;
-                if (showNotification) {
-                    wchar_t msg[128];
-                    swprintf_s(msg, TR(L"New version available! Download at: https://github.com/Agzes/AntiAFK-RBX"));
-                    ShowTrayNotification(TR(L"AntiAFK-RBX • Update Available"), msg);
-                }
-                if (g_hwnd) {
-                    QueueRefreshTrayMenu(g_isAfkStarted.load());
-                }
-            }
-        }
-        catch (const std::invalid_argument&) {
-            g_updateCheckFailed = true;
-        }
-        catch (const std::out_of_range&) {
-            g_updateCheckFailed = true;
-        }
-    }
-    else
+
+    std::string response;
+    std::wstring tag;
+    int serverVersion = 0, serverForkBuild = 0;
+    if (!DownloadTextUrl(GetVersionCheckUrl(), response, 5000, 512 * 1024) ||
+        !ParseJsonString(Utf8ToWide(response), L"tag_name", tag) ||
+        !ParseForkReleaseTag(tag, serverVersion, serverForkBuild))
     {
         g_updateCheckFailed = true;
     }
-
-    InternetCloseHandle(hConnect);
-    InternetCloseHandle(hInternet);
+    else if (serverVersion > currentVersion || (serverVersion == currentVersion && serverForkBuild > FORK_BUILD))
+    {
+        updateFound = true;
+        g_updateServerVersion = serverVersion;
+        {
+            std::lock_guard<std::mutex> lock(g_updateServerTagMutex);
+            g_updateServerTag = tag;
+        }
+        g_updateFound = true;
+        if (showNotification) {
+            ShowTrayNotification(TR(L"AntiAFK-RBX • Update Available"), TR(L"New version available! Download at: https://github.com/x0doit/AntiAFK-RBX/releases"));
+        }
+        if (g_hwnd) {
+            QueueRefreshTrayMenu(g_isAfkStarted.load());
+        }
+    }
 
     if (g_hMainUiWnd && IsWindow(g_hMainUiWnd))
     {
@@ -19314,7 +19344,7 @@ title = TR(L"CPU Limit %");
             return;
         }
         if (pData->alphaInfoLinkRect.right > 0 && PtInRect(&pData->alphaInfoLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/releases/", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", FORK_RELEASES_URL, NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         if (pData->alphaInfoGitHubLinkRect.right > 0 && PtInRect(&pData->alphaInfoGitHubLinkRect, pt)) {
@@ -19326,11 +19356,11 @@ title = TR(L"CPU Limit %");
             return;
         }
         if (pData->alphaInfoReleasesLinkRect.right > 0 && PtInRect(&pData->alphaInfoReleasesLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/releases/", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", FORK_RELEASES_URL, NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         if (pData->alphaInfoWhatsNewLinkRect.right > 0 && PtInRect(&pData->alphaInfoWhatsNewLinkRect, pt)) {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/releases/", NULL, NULL, SW_SHOWNORMAL);
+            ShellExecute(NULL, L"open", FORK_RELEASES_URL, NULL, NULL, SW_SHOWNORMAL);
             return;
         }
         return;
@@ -22859,7 +22889,11 @@ pData->resetSettingsButtonRect = { 0, clientRect.bottom - startBtnH - disclaimer
                 sfUpdateBannerDesc.SetTrimming(StringTrimmingEllipsisCharacter);
 
                 wchar_t versionText[64];
-                FormatVersionReadable(g_updateServerVersion.load(), versionText, 64);
+                std::wstring serverTag = GetUpdateServerTag();
+                if (!serverTag.empty())
+                    StringCchCopyW(versionText, _countof(versionText), serverTag.c_str());
+                else
+                    FormatVersionReadable(g_updateServerVersion.load(), versionText, 64);
                 wchar_t descText[128];
                 swprintf_s(descText, L"%s • %s", GetReleaseChannelName(), versionText);
                 g.DrawString(descText, -1, &updateBannerDescFont, updateBannerDescRect, &sfUpdateBannerDesc, &updateBannerDescBrush);
@@ -28849,9 +28883,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             break;
         }
         case ID_LINKGITHUB:
-        case ID_UPDATE_AVAILABLE:
         {
             ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX", NULL, NULL, SW_SHOWNORMAL);
+            break;
+        }
+        case ID_UPDATE_AVAILABLE:
+        {
+            ShellExecute(NULL, L"open", FORK_LATEST_RELEASE_URL, NULL, NULL, SW_SHOWNORMAL);
             break;
         }
         case ID_OPEN_ANNOUNCEMENT:
