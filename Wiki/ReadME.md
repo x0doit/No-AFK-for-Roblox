@@ -1,12 +1,5 @@
-<div align="center">
-    <kbd><h1>&nbsp; AntiAFK-RBX • Wiki &nbsp;</h1>
-        &nbsp;
-        <a href="https://github.com/Agzes/AntiAFK-RBX/wiki/">https://github.com/Agzes/AntiAFK-RBX/wiki/</a>
-        &nbsp;
-    <br><br>
-    </kbd>
-    <br><br>
-    <a href="https://github.com/Agzes/AntiAFK-RBX/wiki/">
-        <kbd>📃 Go to WIKI -></kbd>
-    </a>
-</div>
+# No AFK for Roblox • Wiki
+
+Документация проекта находится в wiki: **https://github.com/x0doit/No-AFK-for-Roblox/wiki**
+
+The project documentation lives in the wiki: **https://github.com/x0doit/No-AFK-for-Roblox/wiki**

@@ -8,14 +8,16 @@
 #define STABLE  4
 #define MAKE_VERSION(major, minor, patch, type, num) ((major)*10000000 + (minor)*100000 + (patch)*1000 + (type)*100 + (num))
 int currentVersion = MAKE_VERSION(4, 0, 0, BETA, 3);
-const wchar_t* g_Version = L"v.4.0.0-beta3-ru.4";
+const wchar_t* g_Version = L"v.4.0.0-beta3-ru.5";
 
 // Updates come from this fork's GitHub releases, tagged v.<upstream version>-ru.<FORK_BUILD>
 // (for example v.4.0.0-beta.3-ru.3). Bump FORK_BUILD and the -ru.N part of g_Version together.
-const int FORK_BUILD = 4;
+const int FORK_BUILD = 5;
 #define FORK_RELEASES_URL L"https://github.com/x0doit/No-AFK-for-Roblox/releases"
 #define FORK_LATEST_RELEASE_URL L"https://github.com/x0doit/No-AFK-for-Roblox/releases/latest"
 #define FORK_LATEST_RELEASE_API L"https://api.github.com/repos/x0doit/No-AFK-for-Roblox/releases/latest"
+// Project wiki. Every page exists in English and Russian (see OpenWikiPage).
+#define FORK_WIKI_URL L"https://github.com/x0doit/No-AFK-for-Roblox/wiki"
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -10435,6 +10437,33 @@ std::string WideToUtf8(const std::wstring& input)
     return output;
 }
 
+// Opens a wiki page in the interface language. Without page names it opens the wiki home,
+// which covers both languages. Russian page names are Cyrillic, so they are percent-encoded.
+static void OpenWikiPage(const wchar_t* englishPage = nullptr, const wchar_t* russianPage = nullptr)
+{
+    std::wstring url = FORK_WIKI_URL;
+    const wchar_t* page = IsRussianUi() ? russianPage : englishPage;
+    if (page && *page)
+    {
+        static const char hex[] = "0123456789ABCDEF";
+        url += L'/';
+        for (unsigned char c : WideToUtf8(page))
+        {
+            if (c < 0x80)
+            {
+                url += (wchar_t)c;
+            }
+            else
+            {
+                url += L'%';
+                url += (wchar_t)hex[c >> 4];
+                url += (wchar_t)hex[c & 0x0F];
+            }
+        }
+    }
+    ShellExecute(NULL, L"open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
+}
+
 std::string EscapeJsonStringUtf8(const std::string& input)
 {
     std::string escaped;
@@ -16233,7 +16262,7 @@ LRESULT CALLBACK TutorialWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
             ShellExecute(NULL, L"open", L"https://github.com/x0doit/No-AFK-for-Roblox", NULL, NULL, SW_SHOWNORMAL);
             break;
         case ID_LINKWIKI_TUTORIAL:
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/wiki/User-Safe-Mode", NULL, NULL, SW_SHOWNORMAL);
+            OpenWikiPage(L"User-Safe-Mode", L"Режим-User-Safe");
             break;
         case ID_BTN_NEXT:
         {
@@ -20672,7 +20701,7 @@ title = TR(L"CPU Limit %");
         return;
     }
     if (pData->disclaimerWikiRect.right > 0 && PtInRect(&pData->disclaimerWikiRect, pt)) {
-        ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/wiki", NULL, NULL, SW_SHOWNORMAL);
+        OpenWikiPage();
         return;
     }
     if (pData->disclaimerShowMoreRect.right > 0 && PtInRect(&pData->disclaimerShowMoreRect, pt)) {
@@ -28880,12 +28909,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         case ID_LINKTTU:
         {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/wiki/Tips-For-Use", NULL, NULL, SW_SHOWNORMAL);
+            OpenWikiPage(L"Tips", L"Советы");
             break;
         }
         case ID_LINKWIKI:
         {
-            ShellExecute(NULL, L"open", L"https://github.com/Agzes/AntiAFK-RBX/wiki", NULL, NULL, SW_SHOWNORMAL);
+            OpenWikiPage();
             break;
         }
         case ID_LINKGITHUB:

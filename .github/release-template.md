@@ -1,7 +1,7 @@
 <!-- release part -->
 
-<div align="center"><kbd>Preview</kbd> • <kbd>{{VERSION}}</kbd> • <kbd>by Agzes</kbd>
-<h1 align="center">$\Huge{\textsf{𝗔𝗻𝘁𝗶𝗔𝗙𝗞-𝗥𝗕𝗫}}$ <sup><sup></sup></sup></h1>
+<div align="center"><kbd>Preview</kbd> • <kbd>{{VERSION}}</kbd> • <kbd>by x0doit</kbd>
+<h1 align="center">$\Huge{\textsf{No AFK for Roblox}}$ <sup><sup></sup></sup></h1>
 <kbd align="left"><div align="center"><h1> ⚒️ ChangeLog ⚒️ </h1></div>
 
 ## ✨ Updates
@@ -16,7 +16,7 @@
 
 <!-- preview note -->
 <kbd>
-<div align="center"><div align="center"><h1> Note! </h1><b>&nbsp;&nbsp;This release was built from the preview branch.&nbsp;&nbsp;<br>&nbsp;&nbsp;Download the stable version here: <a href="https://github.com/Agzes/AntiAFK-RBX/releases/latest">Latest Stable</a></b>&nbsp;&nbsp;</div><br></div><br>
+<div align="center"><div align="center"><h1> Note! </h1><b>&nbsp;&nbsp;This release was built from the preview branch.&nbsp;&nbsp;<br>&nbsp;&nbsp;Download the stable version here: <a href="https://github.com/x0doit/No-AFK-for-Roblox/releases/latest">Latest Stable</a></b>&nbsp;&nbsp;</div><br></div><br>
 
 </kbd>
 <!-- preview note -->
@@ -26,25 +26,25 @@
 
 <!-- information part -->
 
-<div align="center"><kbd><a href="https://github.com/Agzes/AntiAFK-RBX/wiki">
+<div align="center"><kbd><a href="https://github.com/x0doit/No-AFK-for-Roblox/wiki">
 
 # Wiki
 
-&nbsp; <kbd> Not run? </kbd><kbd></kbd><kbd> Tips For Use </kbd><kbd></kbd><kbd> User-Safe </kbd> &nbsp;
+&nbsp; <kbd> Not run? </kbd><kbd></kbd><kbd> Tips </kbd><kbd></kbd><kbd> User-Safe </kbd> &nbsp;
 
 </a>
-</kbd>&nbsp;&nbsp;&nbsp;            <kbd><a href="https://github.com/Agzes/AntiAFK-RBX/issues">
+</kbd>&nbsp;&nbsp;&nbsp;            <kbd><a href="https://discord.gg/ayame">
 
-# Issues
+# Discord
 
-&nbsp; <kbd> If you have questions, problems, or ideas, open an issue! </kbd> &nbsp;
+&nbsp; <kbd> Questions, problems or ideas? Write to us on Discord! </kbd> &nbsp;
 
 </a></kbd>
 
 </kbd>
 <br><br>
 
-<kbd> Please ⭐ the project </kbd> <kbd></kbd> <kbd> Made with 💟 by Agzes </kbd> <kbd></kbd> <a href="https://agzes.github.io/go/to/discord"><kbd> Join 💬 Discord </kbd></a>
+<kbd> Please ⭐ the project </kbd> <kbd></kbd> <kbd> Made with 💟 by x0doit </kbd> <kbd></kbd> <a href="https://discord.gg/ayame"><kbd> Join 💬 Discord </kbd></a>
 
 </div></div>
 
